@@ -1,16 +1,18 @@
-const express = require("express"); 
+
+import express from "express"; 
+import { validateSchema } from "../middleware/validateSchema.js"
+import { carePlanSchema } from "./carePlan.schema";
+import { 
+    getAll, getOne, create, update, remove
+} from "../controllers/carePlanController.js"; 
+
 const router = express.Router(); 
-const products = require("./carePlansController"); 
 
-// GET all care plans 
-router.get("/", products.getAll);
-// GET a single care plan 
-router.get("/:id", products.getOne); 
-// CREATE new care plan 
-router.post("/",  products.create); 
-router.put("/:id", products.update); 
-// UPDATE A CARE PLAN 
-router.delete("/:id", products.remove); 
-// DELETE A CARE PLAN 
+// CRUD routes 
+router.get("/", getAll);
+router.get("/:id", getOne); 
+router.post("/", validateSchema(carePlanSchema), create); 
+router.put("/:id", update); 
+router.delete("/:id", remove); 
 
-module.exports = router; 
+export default router; 

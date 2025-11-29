@@ -1,56 +1,52 @@
-const { readData, writeData } = require("../utils/readWrite"); 
-const FILE_NAME = "leaderboard.json"; 
 
-// GET ALL SCORES - high -> low 
-exports.getAll = (req, res) => { 
-    const scores = readData(FILE_NAME);
-    const sorted = [...scores].sort((a,b)=>b.score-a.score); 
-    res.json(sorted); 
+import { readData, writeData } from "../utils/readWrite.js"; 
+const FILE = "../data/tasks.json"; 
+
+export const getAll = (req, res) => { 
+    const tasks = readData(FILE);
+    res.json(tasks); 
 }; 
-// CREATE NEW score entry 
-exports.create= (req,res)=> { 
-    const scores = readData(FILE_NAME); 
-    const newEntry = { 
+
+export const getOne = (req, res) => { 
+    const tasks = readData(FILE);
+    const task = tasks.find(t=> t.id === Number(req.params.id)); 
+    if (!task) return res.status(404).json({ message: "Task not foud"}); 
+    res.json(tasks); 
+}; 
+
+export const create = (req,res)=> { 
+    const tasks = readData(FILE); 
+    const { title, description, assignedTo, dueDate, completed } = req.body;  
+    const newTask = { 
         id: Date.now(),
-        username: req.body.username, 
-        score: req.body.score
+        title, 
+        description, 
+        assignedTo, 
+        dueDate, 
+        complete: completed || false 
     }; 
-    scores.push(newEntry); 
-    writeData(FILE_NAME, scores); 
-    res.status(201).json(newEntry);
+    tasks.push(newTask); 
+    writeData(FILE, tasks); 
+    res.status(201).json(newTask);
 }; 
 
-// UPDATE A SCORE 
-exports.update = (req, res) => { 
-    const scores = readData(FILE_NAME); 
+export const update = (req, res) => { 
+    const scores = readData(FILE); 
     const id = Number(req.params.id); 
-    const i = scores.findIndex(s=>s.id === id); 
+    const i = scores.findIndex(t=>t.id === id); 
     if (i === -1) return res.status(404).json({message: "Not found"}); 
 
-    scores[i] = {...scores[i], ...req.body }; 
-    writeData(FILE_NAME, scores); 
-    res.json(scores[i]);
+    tasks[i] = {...tasks[i], ...req.body }; 
+    writeData(FILE, tasks); 
+    res.json(tasks[i]);
 };
 
-// DELETE A SCORE 
-exports.remove = (req, res) => { 
-    const scores = readData(FILE_NAME); 
+export const remove = (req, res) => { 
+    const tasks = readData(FILE); 
     const id = Number(req.params.id); 
 
-    const newScores = scores.filter(p => p.id !== id); 
-    writeData(FILE_NAME, newScores); 
+    const newTasks = tasks.filter(t => t.id !== id); 
+    writeData(FILE, newTasks); 
     res.json({message: "Deleted"}); 
 }; 
 
-// GET HIGHEST SCORE 
-exports.getHighest = (req, res) => { 
-    const scores = readData(FILE_NAME); 
-    
-    if (scores.length === 0){ 
-        return res.status(404).json({message:"No scores yet"}); 
-    }
-    const highest = scores.reduce((max,current)=>
-        current.score > max.score ? current : max 
-    );
-    res.json(highest); 
-}; 

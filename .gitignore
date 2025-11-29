@@ -21,7 +21,7 @@ logs/
 /*.pid.lock
 
 ############################
-# Frontend (future React/Vite)
+# Frontend (React/Vite)
 ############################
 dist/
 build/

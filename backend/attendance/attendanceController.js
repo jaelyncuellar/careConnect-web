@@ -1,62 +1,55 @@
 
 
-const { readData, writeData } = require("../utils/readWrite"); 
-const FILE_NAME = "notes.json"; 
+import { readDate, writeData } from "../utils/readWrite"
+const FILE_NAME = "../data/attendance.json"; 
 
-// GET ALL 
-exports.getAll = (req,res) => { 
-    const notes = readData(FILE_NAME); 
-    res.json(notes);
+export const getAll = (req,res) => { 
+    const records = readData(FILE_NAME); 
+    res.json(records);
 }; 
 
-// GET ONE 
-exports.getOne = (req, res) => { 
-    const notes = readData(FILE_NAME); 
-    const note = notes.find(n => n.id === Number(req.params.id)); 
-    if (!note) return res.status(404).json({message: "Not found" }); 
-    res.json(note); 
+export const getOne = (req, res) => { 
+    const records = readData(FILE_NAME); 
+    const record = records.find(r => r.id === Number(req.params.id)); 
+    if (!record) return res.status(404).json({message: "Not found" }); 
+    res.json(record); 
 }; 
 
-// CREATE 
-exports.create = (req,res) => { 
-    const notes = readData(FILE_NAME);
-    const { title, content } = req.body; 
-    const newNote = {
-        id:Date.now(), 
-        title, 
-        content
+export const create = (req,res) => { 
+    const records = readData(FILE_NAME);
+    const newRecord = { 
+        id: Date.now(), 
+        ...req.body
     }; 
-    notes.push(newNote); 
-    writeData(FILE_NAME, notes); 
+    records.push(newRecord); 
+    writeData(FILE_NAME, records); 
     res.status(201).json(newNote); 
 }; 
 
-// UPDATE 
-exports.update = (req, res) => { 
-    const notes = readData(FILE_NAME);
+export const update = (req, res) => { 
+    const records = readData(FILE_NAME);
     const id = Number(req.params.id); 
 
-    const index = notes.findIndex(n=>n.id === id); 
+    const index = records.findIndex(r=>r.id === id); 
     if (index === -1) return res.status(404).json({message: "Not found" }); 
 
-    notes[index] = {...notes[index], ...req.body }; 
-    writeData(FILE_NAME, notes); 
+    records[index] = {...records[index], ...req.body }; 
+    writeData(FILE_NAME, records); 
 
-    res.json(notes[index]); 
+    res.json(records[index]); 
 }; 
 
-// DELETE
-exports.remove = (req, res) => { 
-    const notes = readData(FILE_NAME);
+export const remove = (req, res) => { 
+    const records = readData(FILE_NAME);
     const id = Number(req.params.id); 
 
-    const newNotes = notes.filter(n=>n.id != id); 
-    writeData(FILE_NAME, newNotes); 
+    const newRecords = records.filter(r=>r.id != id); 
+    writeData(FILE_NAME, newRecords); 
     
     res.json({ message: "Deleted"});
 }; 
 
-exports.test = (req, res) => {
-  res.json({ message: "api notes works!" });
+export const test = (req, res) => {
+  res.json({ message: "attendance api works!" });
 };
 

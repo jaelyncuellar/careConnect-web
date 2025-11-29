@@ -1,11 +1,20 @@
-const express = require("express"); 
+
+import express from "express"; 
+import { validateSchema } from "../middleware/validateSchema.js"
+import { taskSchema } from "./task.schema.js";
+import { 
+    getAll, create, update, remove
+} from "../controllers/taskController.js"; 
+
 const router = express.Router(); 
-const lb = require ("./leaderboardController"); 
 
-router.get("/highest", lb.getHighest);
-router.get("/", lb.getAll); 
-router.post("/", lb.create); 
-router.put("/:id", lb.update); 
-router.delete("/:id", lb.remove); 
+// CRUD routes 
+router.get("/", getAll);
+router.get("/:id", getOne); 
+router.post("/", validateSchema(taskSchema), create); 
+router.put("/:id", update); 
+router.delete("/:id", remove); 
 
-module.exports = router; 
+export default router; 
+
+
