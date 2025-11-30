@@ -5,43 +5,66 @@ function show(data) {
 }
 
 /* NOTES API */
-async function getNotes() { 
-  const res = await fetch(`${BASE}/api/notes`); 
+async function getAttendance() { 
+  const res = await fetch(`${BASE}/api/attendance`); 
   show(await res.json());
 } 
-async function createNote() { 
-  const res = await fetch(`${BASE}/api/notes`, { 
+async function createAttendance() { 
+  const res = await fetch(`${BASE}/api/attendance`, { 
     method: "POST", 
     headers: {"Content-Type": "application/json"}, 
-    body: JSON.stringify({title: "New Note!", content:"hi i just made a new note!"})
+    body: JSON.stringify({
+      id: "1", 
+      employeeId : "1",
+      date: "2025-11-30",
+      timeIn: "10:38",
+      timeOut:  "10:40",
+      status: "on-time"
+    })
   });
   show(await res.json()); 
 }
 
 /* leaderboard api */
-async function getLeaderboard() { 
-  const res = await fetch(`${BASE}/api/leaderboard`); 
+async function getCarePlans() { 
+  const res = await fetch(`${BASE}/api/care-plans`); 
   show(await res.json()); 
 } 
-async function addScore() { 
-  const res = await fetch(`${BASE}/api/leaderboard`, { 
+async function addCarePlan() { 
+  const res = await fetch(`${BASE}/api/care-plans`, { 
     method: "POST", 
     headers: { "Content-Type": "application/json"}, 
-    body: JSON.stringify({username: "Player", score: Math.floor(Math.random() * 100) })
+    body: JSON.stringify({
+      id: "1",
+      clientName: "Jill" ,
+      clientId: "1",
+      planType: "rehab",
+      goals: ["employment"],
+      tasks: ["appointment on 12/1"],
+      lastUpdated: "2025-11-30T14:45:00Z" 
+    })
   });
   show(await res.json()); 
 }
 
 /* PRODUCTS API */
-async function getProducts() { 
-  const res = await fetch(`${BASE}/api/products`); 
+async function getTasks() { 
+  const res = await fetch(`${BASE}/api/tasks`); 
   show(await res.json()); 
 } 
-async function createProduct() { 
-  const res = await fetch(`${BASE}/api/products`, { 
+async function createTask() { 
+  const res = await fetch(`${BASE}/api/tasks`, { 
     method: "POST", 
     headers: { "Content-Type": "application/json" }, 
-    body: JSON.stringify({name: "Sample Product", price: 19.99, stock: 19.98 })
+    body: JSON.stringify({
+      id: "1", 
+      title: "appt",
+      clientId: "1", 
+      description: "appt at hearing place in boise. noon.",
+      status: "in-progress",
+      dueDate: "2025-11-30", 
+      assignedTo: "Jane"
+    })
   }); 
   show(await res.json());
 }

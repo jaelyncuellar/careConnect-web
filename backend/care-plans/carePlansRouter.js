@@ -1,10 +1,10 @@
 
 import express from "express"; 
 import { validateSchema } from "../middleware/validateSchema.js"
-import { carePlanSchema } from "./carePlan.schema";
-import { 
-    getAll, getOne, create, update, remove
-} from "../controllers/carePlanController.js"; 
+import { carePlanSchema }  from "./carePlans.schema.js";
+
+import { getAll, getOne, create, update, remove
+} from "./carePlansController.js"; 
 
 const router = express.Router(); 
 

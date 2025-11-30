@@ -1,7 +1,7 @@
 
 
-import { readDate, writeData } from "../utils/readWrite"
-const FILE_NAME = "../data/attendance.json"; 
+import { readData, writeData } from "../utils/readWrite.js"
+const FILE_NAME = "attendance.json"; 
 
 export const getAll = (req,res) => { 
     const records = readData(FILE_NAME); 
@@ -17,35 +17,38 @@ export const getOne = (req, res) => {
 
 export const create = (req,res) => { 
     const records = readData(FILE_NAME);
+    const { employeeId, date, timeIn, timeOut, status } = req.body; 
+
     const newRecord = { 
         id: Date.now(), 
-        ...req.body
+        employeeId, 
+        date, 
+        timeIn,
+        timeOut: timeOut || null, 
+        status 
     }; 
     records.push(newRecord); 
     writeData(FILE_NAME, records); 
-    res.status(201).json(newNote); 
+    res.status(201).json(newRecord); 
 }; 
 
 export const update = (req, res) => { 
     const records = readData(FILE_NAME);
     const id = Number(req.params.id); 
+    const idx = records.findIndex(r=>r.id === id); 
+    if (idx === -1) return res.status(404).json({message: "Not found" }); 
 
-    const index = records.findIndex(r=>r.id === id); 
-    if (index === -1) return res.status(404).json({message: "Not found" }); 
-
-    records[index] = {...records[index], ...req.body }; 
+    records[idx] = {...records[idx], ...req.body }; 
     writeData(FILE_NAME, records); 
 
-    res.json(records[index]); 
+    res.json(records[idx]); 
 }; 
 
 export const remove = (req, res) => { 
     const records = readData(FILE_NAME);
     const id = Number(req.params.id); 
-
     const newRecords = records.filter(r=>r.id != id); 
     writeData(FILE_NAME, newRecords); 
-    
     res.json({ message: "Deleted"});
 }; 
 

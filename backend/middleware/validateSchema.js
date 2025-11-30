@@ -1,8 +1,10 @@
 // middleware/validateSchema.js 
 
 import Ajv from "ajv"; 
+import addFormats from "ajv-formats"; 
 
 const ajv = new Ajv({allErrors: true}); 
+addFormats(ajv); // enables "date", "time", etc 
 
 export const validateSchema = (schema) => { 
     const validate = ajv.compile(schema); 

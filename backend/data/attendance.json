@@ -1,28 +1,34 @@
 [
   {
-    "id": 1764108121972
+    "id": 1764540080772,
+    "employeeId": "1",
+    "date": "2025-11-30",
+    "timeIn": "10:38",
+    "timeOut": "10:40",
+    "status": "on-time"
   },
   {
-    "id": 1764108122460
+    "id": 1764540102195,
+    "employeeId": "1",
+    "date": "2025-11-30",
+    "timeIn": "10:38",
+    "timeOut": "10:40",
+    "status": "on-time"
   },
   {
-    "id": 1764108125939
+    "id": 1764540111622,
+    "employeeId": "1",
+    "date": "2025-11-30",
+    "timeIn": "10:38",
+    "timeOut": "10:40",
+    "status": "on-time"
   },
   {
-    "id": 1764108126418
-  },
-  {
-    "id": 1764108227603
-  },
-  {
-    "id": 1764108231538
-  },
-  {
-    "id": 1764108234418
-  },
-  {
-    "id": 1764122059792,
-    "title": "New Note!",
-    "content": "hi i just made a new note!"
+    "id": 1764540592427,
+    "employeeId": "1",
+    "date": "2025-11-30",
+    "timeIn": "10:38",
+    "timeOut": "10:40",
+    "status": "on-time"
   }
 ]

@@ -1,24 +1,18 @@
 import express from "express"; 
-import { 
-  getAll, getOne, create, update, remove, test
-} from "./attendanceController.js"
-
 import { validateSchema } from "../middleware/validateSchema.js"
 import { attendanceSchema } from "./attendance.schema.js";
 
-const router = express.Router(); 
+import { getAll, getOne, create, update, remove, test
+} from "./attendanceController.js"
 
-// test
-router.get("/test", test);
+const router = express.Router(); 
 
 // CRUD routes 
 router.get("/", getAll); 
 router.get("/:id", getOne); 
-
-// only 1 POST route with validation 
 router.post("/", validateSchema(attendanceSchema), create); 
-
 router.put("/:id", update); 
 router.delete("/:id", remove); 
+router.get("/test", test);
 
 export default router; 

@@ -1,42 +1,41 @@
 [
   {
-    "name": 1764108510706,
-    "price": 19.99,
-    "stock": 19.98
+    "id": 1764540082577,
+    "clientName": "Jill",
+    "clientId": "1",
+    "planType": "rehab",
+    "goals": [
+      "employment"
+    ],
+    "tasks": [
+      "appointment on 12/1"
+    ],
+    "lastUpdated": "2025-11-30T22:01:22.577Z"
   },
   {
-    "name": 1764108511838,
-    "price": 19.99,
-    "stock": 19.98
+    "id": 1764540105794,
+    "clientName": "Jill",
+    "clientId": "1",
+    "planType": "rehab",
+    "goals": [
+      "employment"
+    ],
+    "tasks": [
+      "appointment on 12/1"
+    ],
+    "lastUpdated": "2025-11-30T22:01:45.794Z"
   },
   {
-    "name": 1764108515048,
-    "price": 19.99,
-    "stock": 19.98
-  },
-  {
-    "name": 1764108515953,
-    "price": 19.99,
-    "stock": 19.98
-  },
-  {
-    "name": "Sample Product",
-    "price": 19.99,
-    "stock": 19.98
-  },
-  {
-    "name": "Sample Product",
-    "price": 19.99,
-    "stock": 19.98
-  },
-  {
-    "name": "hi Product",
-    "price": 19.99,
-    "stock": 19.98
-  },
-  {
-    "name": "Sample Product",
-    "price": 19.99,
-    "stock": 19.98
+    "id": 1764540593691,
+    "clientName": "Jill",
+    "clientId": "1",
+    "planType": "rehab",
+    "goals": [
+      "employment"
+    ],
+    "tasks": [
+      "appointment on 12/1"
+    ],
+    "lastUpdated": "2025-11-30T22:09:53.691Z"
   }
 ]
