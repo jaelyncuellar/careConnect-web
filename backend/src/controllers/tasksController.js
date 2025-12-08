@@ -3,7 +3,7 @@ import { readData, writeData } from "../utils/readWrite.js";
 const FILE_NAME = "tasks.json"; 
 
 export const getAll = (req, res) => { 
-    const tasks = readData(FILE_NAME);
+    const tasks = readData(FILE_NAME) || [];
     res.json(tasks); 
 }; 
 
@@ -47,6 +47,6 @@ export const remove = (req, res) => {
 
     const newTasks = tasks.filter((t) => t.id !== id); 
     writeData(FILE_NAME, newTasks); 
-    res.json({message: "Deleted"}); 
-}; 
+    res.status(204).send();
+}
 

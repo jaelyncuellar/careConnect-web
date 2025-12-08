@@ -1,10 +1,10 @@
 
 import express from "express"; 
 import { validateSchema } from "../middleware/validateSchema.js"
-import { carePlanSchema }  from "./carePlans.schema.js";
+import { carePlanSchema }  from "../models/carePlans.schema.js";
 
 import { getAll, getOne, create, update, remove
-} from "./carePlansController.js"; 
+} from "../controllers/carePlansController.js"; 
 
 const router = express.Router(); 
 
@@ -12,7 +12,7 @@ const router = express.Router();
 router.get("/", getAll);
 router.get("/:id", getOne); 
 router.post("/", validateSchema(carePlanSchema), create); 
-router.put("/:id", update); 
+router.put("/:id", validateSchema(carePlanSchema), update); 
 router.delete("/:id", remove); 
 
 export default router; 

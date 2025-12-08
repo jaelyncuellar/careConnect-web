@@ -1,10 +1,8 @@
-
-
 import { readData, writeData } from "../utils/readWrite.js"
 const FILE_NAME = "attendance.json"; 
 
 export const getAll = (req,res) => { 
-    const records = readData(FILE_NAME); 
+    const records = readData(FILE_NAME) || []; 
     res.json(records);
 }; 
 
@@ -50,9 +48,10 @@ export const remove = (req, res) => {
     const newRecords = records.filter(r=>r.id != id); 
     writeData(FILE_NAME, newRecords); 
     res.json({ message: "Deleted"});
-}; 
+    return res.status(204).send();
+} 
 
 export const test = (req, res) => {
   res.json({ message: "attendance api works!" });
-};
+}
 

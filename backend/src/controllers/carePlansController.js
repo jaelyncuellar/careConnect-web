@@ -1,10 +1,10 @@
 
 
 import { readData, writeData } from "../utils/readWrite.js"; 
-const FILE_NAME = "care-plans.json"; 
+const FILE_NAME = "carePlans.json"; 
 
 export const getAll = (req, res) => { 
-    const plans = readData(FILE_NAME); 
+    const plans = readData(FILE_NAME) || []; 
     res.json(plans); 
 }; 
 
@@ -50,5 +50,5 @@ export const remove = (req, res) => {
     const id = Number(req.params.id); 
     const newPlans = plans.filter(p => p.id !== id); 
     writeData(FILE_NAME, newPlans);
-    res.json({ message: "Deleted"}); 
+    res.status(204).send();
 }; 
