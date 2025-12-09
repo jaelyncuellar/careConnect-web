@@ -2,11 +2,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
 
-import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import TasksPage from "./features/tasks/TasksPage.jsx";
-import CarePlans from "./features/carePlans/CarePlans.jsx";
+import CarePlans from "./features/carePlans/CarePlansPage.jsx";
 import Attendance from "./pages/Attendance";
 import Settings from "./pages/Settings"; // create simple placeholder
 
@@ -16,8 +15,7 @@ function App() {
       <Navbar />
       <div className="p-6">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/tasks" element={<TasksPage />} />
           <Route path="/care-plans" element={<CarePlans />} />
