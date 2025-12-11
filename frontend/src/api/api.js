@@ -2,8 +2,8 @@
 // and common fetch settings 
 const API_BASE_URL = "http://localhost:3000"; 
 
-export async function apiRequest(path, options = {}) { 
-    const res = await fetch(`${API_BASE_URL}${path}`, { 
+export async function apiRequest(endpoint, options = {}) { 
+    const res = await fetch(`${API_BASE_URL}${endpoint}`, { 
         headers: { "Content-Type" : "application/json" }, 
         ...options, 
     }); 
