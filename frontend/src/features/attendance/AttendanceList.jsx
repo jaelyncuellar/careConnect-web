@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"; 
-import { getAttendance } from "./attendanceService"; 
+import { getAttendance } from "../../../../backend/src/services/attendanceService"; 
 import Card from "../../UI/Card"; 
 
 console.log("Loaded: attendance list ");

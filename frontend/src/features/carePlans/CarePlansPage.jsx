@@ -1,7 +1,7 @@
 console.log("Loaded: CarePlans");
 
 import { useState, useEffect } from "react";
-import { getCarePlans, createCarePlan } from "./carePlansService";
+import { getCarePlans, createCarePlan } from "../../../../backend/src/services/carePlansService";
 import CarePlanList from "./CarePlansList";
 import CarePlanForm from "./CarePlansForm";
 

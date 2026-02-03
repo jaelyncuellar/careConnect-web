@@ -2,12 +2,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
 
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
+import Dashboard from "./pages/DashboardPage.jsx";
+import Login from "./pages/LoginPage.jsx";
 import TasksPage from "./features/tasks/TasksPage.jsx";
 import CarePlans from "./features/carePlans/CarePlansPage.jsx";
-import Attendance from "./pages/Attendance";
-import Settings from "./pages/Settings"; // create simple placeholder
+import Attendance from "./pages/AttendancePage.jsx";
+import Settings from "./pages/SettingsPage.jsx"; // create simple placeholder
 
 function App() {
   return (

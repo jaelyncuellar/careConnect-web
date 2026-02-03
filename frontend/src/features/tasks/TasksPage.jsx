@@ -3,7 +3,8 @@ console.log("Loaded: tasks");
 import { useEffect, useState } from "react"; 
 import TasksList from "./TaskList";
 import TasksForm from "./TaskForm";
-import { getTasks, createTask, updateTask, deleteTask } from "./tasksService"; 
+import { getTasks, createTask, updateTask, deleteTask } from "../../../../backend/src/services/tasksService";
+
 
 export default function TasksPage() { 
     const [tasks, setTasks] = useState([]); 

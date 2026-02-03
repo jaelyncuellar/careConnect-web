@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createCarePlan } from "./carePlansService";
+import { createCarePlan } from "../../../../backend/src/services/carePlansService";
 
 export default function CarePlanForm({ onCreated }) {
   const [clientName, setClientName] = useState("");

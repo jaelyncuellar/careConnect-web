@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCarePlans } from "./carePlansService"; 
+import { getCarePlans } from "../../../../backend/src/services/carePlansService"; 
 import Card from "../../UI/Card"; 
 
 export default function CarePlanList({ data }) {
