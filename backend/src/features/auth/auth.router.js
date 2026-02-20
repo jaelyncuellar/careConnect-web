@@ -6,11 +6,11 @@ const router = express.Router();
 
 // register
 router.post("/register", async (req, res)=>{ 
-    const { email, password } = req.body; 
+    const { name, email, password } = req.body; 
     try{ 
         const result = await pool.query( 
-            "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, email", 
-            [email, password]
+            "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, email, name", 
+            [name, email, password]
         ); 
         res.status(201).json(result.rows[0]); 
     } catch (err) { 
@@ -24,7 +24,7 @@ router.post("/login", async (req, res)=>{
     const { email, password } = req.body; 
     try{ 
         const result = await pool.query( 
-            "SELECT id, email FROM users WHERE email=$1 AND password=$2", 
+            "SELECT id, name, email FROM users WHERE email=$1 AND password=$2", 
             [email, password]
         ); 
         if (result.rows.length===0){ 

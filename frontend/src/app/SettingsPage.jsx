@@ -9,19 +9,27 @@ import { useNavigate } from "react-router-dom";
 export default function SettingsPage() {
   const [staff, setStaff] = useState([]);
   const [profile, setProfile] = useState({
-    name: "Jane Doe",
-    email: "jane@example.com"
+    name: "",
+    email: ""
   });
 
   const navigate = useNavigate();
 
-  // Load staff
+  // fetch staff, update prof state, 
   useEffect(() => {
     async function load() {
       const data = await getAllStaff();
       setStaff(data);
-    }
-    load();
+      // load curr user from localStorage (where user info stored by auth)
+      const currentUser = JSON.parse(localStorage.getItem("user"));
+      if (currentUser) { 
+        setProfile({
+          name: currentUser.name || "", 
+          email: currentUser.email || ""
+        }); 
+      }   
+    } 
+  load();
   }, []);
 
   function handleProfileChange(e) {

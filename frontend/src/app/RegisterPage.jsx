@@ -5,6 +5,7 @@ import { auth } from "../features/auth/auth";
 export default function RegisterPage() { 
     const navigate = useNavigate(); 
     const [form, setForm] = useState({ 
+        name: "",
         email: "", 
         password: "", 
     }); 
@@ -22,7 +23,7 @@ export default function RegisterPage() {
         setLoading(true); 
         setError(""); 
         try { 
-            await auth.register(form.email, form.password); 
+            await auth.register(form.name, form.email, form.password); 
             navigate("/dashboard"); 
         } catch (err) { 
             setError(err.message); 
@@ -42,6 +43,18 @@ export default function RegisterPage() {
                     </div>
                 )}
                 <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block mb-1 font-medium text-sm">Name</label>
+                        <input
+                            type="name"
+                            name="name"
+                            value={form.name}
+                            onChange={handleChange}
+                            className="w-full border p-2 rounded-lg"
+                            placeholder="Jaelyn Cuellar"
+                            required
+                        ></input>
+                    </div>
                     <div>
                         <label className="block mb-1 font-medium text-sm">Email</label>
                         <input

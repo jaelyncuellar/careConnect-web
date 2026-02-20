@@ -3,13 +3,13 @@
 const BASE_URL = "http://localhost:3000/api/auth"; 
 
 export const auth = { 
-    async register(email, password){ 
+    async register(name, email, password){ 
         const response = await fetch(`${BASE_URL}/register`, { 
             method: "POST", 
             headers: { 
                 "Content-Type": "application/json", 
             }, 
-            body: JSON.stringify({email,password}), 
+            body: JSON.stringify({name, email, password}), 
         }); 
 
         const data = await response.json(); 
