@@ -5,6 +5,8 @@ console.log("Loaded: Settings");
 import React, { useEffect, useState } from "react";
 import { getAllStaff } from "../features/staff/staff.api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../features/auth/AuthContext.jsx";
+
 
 export default function SettingsPage() {
   const [staff, setStaff] = useState([]);
@@ -14,6 +16,7 @@ export default function SettingsPage() {
   });
 
   const navigate = useNavigate();
+  const { user, logout } = useAuth(); 
 
   // fetch staff, update prof state, 
   useEffect(() => {
@@ -21,11 +24,10 @@ export default function SettingsPage() {
       const data = await getAllStaff();
       setStaff(data);
       // load curr user from localStorage (where user info stored by auth)
-      const currentUser = JSON.parse(localStorage.getItem("user"));
-      if (currentUser) { 
+      if (user) { 
         setProfile({
-          name: currentUser.name || "", 
-          email: currentUser.email || ""
+          name: user.name || "", 
+          email: user.email || ""
         }); 
       }   
     } 
@@ -42,7 +44,7 @@ export default function SettingsPage() {
   }
 
   function handleLogout() {
-    localStorage.removeItem("user");
+    logout(); // clears localstorage & sets user(null)
     navigate("/login");
   }
 
@@ -117,7 +119,7 @@ export default function SettingsPage() {
           onClick={handleLogout}
           className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
         >
-          Log Out
+          Logout
         </button>
       </section>
 

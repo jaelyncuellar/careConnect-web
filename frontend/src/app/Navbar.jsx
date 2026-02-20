@@ -2,7 +2,7 @@
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
-  { name: "Homebase", path: "/" },
+  { name: "Home", path: "/dashboard" },
   { name: "Tasks", path: "/tasks" },
   { name: "Care Plans", path: "/care-plans" },
   { name: "Attendance", path: "/attendance" },
@@ -11,6 +11,7 @@ const navItems = [
 
 export default function Navbar() {
   const location = useLocation();
+  
 
   return (
     <nav className="flex items-center justify-between bg-white px-6 py-4 shadow-md">

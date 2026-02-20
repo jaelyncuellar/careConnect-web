@@ -11,21 +11,57 @@ import CarePlans from "./features/carePlans/CarePlansPage.jsx";
 import Attendance from "./features/attendance/AttendancePage.jsx";
 import Settings from "./app/SettingsPage.jsx"; // create simple placeholder
 import RegisterPage from "./app/RegisterPage.jsx"; 
+import { useAuth } from "./features/auth/AuthContext.jsx"
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function App() {
+  const { user } = useAuth(); 
+  console.log("USER CHANGED:", user);
   return (
     <Router>
-      <Navbar />
+      {user && <Navbar />} {/* protected navbar */}
       <div className="p-6">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/tasks" element={<TasksPage />} />
-          <Route path="/care-plans" element={<CarePlans />} />
-          <Route path="/attendance" element={<Attendance />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/tasks" 
+            element={
+              <ProtectedRoute>
+              <TasksPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/care-plans" 
+            element={
+              <ProtectedRoute>
+                <CarePlans />
+              </ProtectedRoute>
+            }
+          />
+          
+          <Route path="/attendance"
+            element={
+              <ProtectedRoute>
+                <Attendance />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/settings" 
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </Router>

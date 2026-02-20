@@ -1,9 +1,12 @@
 import { useState } from "react"; 
 import { useNavigate } from "react-router-dom";
-import { auth } from "../features/auth/auth.js";
+import { auth } from "../features/auth/auth.api.js";
+import { useAuth } from "../features/auth/AuthContext.jsx";
+
 
 export default function LoginPage() { 
     const navigate = useNavigate(); 
+    const { login } = useAuth(); 
 
     const [form, setForm] = useState({
         email: "",
@@ -25,7 +28,11 @@ export default function LoginPage() {
         setError(""); 
 
         try { 
-            await auth.login(form.email, form.password); 
+            const data = await auth.login(
+              form.email,
+              form.password
+            ); 
+            login(data);
             navigate("/dashboard"); 
         } catch (err) { 
             setError(err.message);
@@ -84,8 +91,6 @@ export default function LoginPage() {
             <span
               onClick={() => navigate("/register")}
               className="text-blue-600 cursor-pointer"
-              // onClick={() => navigate("/register")}
-              // className="text-blue-600 cursor-pointer"
             >
               Create one
             </span> 

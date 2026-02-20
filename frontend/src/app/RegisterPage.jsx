@@ -1,14 +1,18 @@
 import { useState } from "react"; 
 import { useNavigate } from "react-router-dom"; 
-import { auth } from "../features/auth/auth"; 
+import { auth } from "../features/auth/auth.api";
+import { useAuth } from "../features/auth/AuthContext.jsx"; 
 
 export default function RegisterPage() { 
     const navigate = useNavigate(); 
+    const { register } = useAuth(); 
+
     const [form, setForm] = useState({ 
         name: "",
         email: "", 
         password: "", 
     }); 
+
     const [error, setError] = useState(""); 
     const [loading, setLoading] = useState(false); 
 
@@ -23,7 +27,12 @@ export default function RegisterPage() {
         setLoading(true); 
         setError(""); 
         try { 
-            await auth.register(form.name, form.email, form.password); 
+            const data = await auth.register(
+                form.name,
+                form.email,
+                form.password
+            ); 
+            register(data);
             navigate("/dashboard"); 
         } catch (err) { 
             setError(err.message); 
