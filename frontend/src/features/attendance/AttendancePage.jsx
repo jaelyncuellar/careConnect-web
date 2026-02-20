@@ -3,7 +3,7 @@ console.log("Loaded: Attendance");
 import { useState, useEffect } from "react"; 
 import AttendanceList from "./AttendanceList";
 import AttendanceForm from "./AttendanceForm";
-import { getAttendance, clockIn, clockOut } from "../../../backend/src/services/attendanceService";
+import { getAttendance, clockIn, clockOut } from "./attendance.api.js";
 
 export default function AttendancePage() { 
     const [attendance, setAttendance] = useState([]); 

@@ -1,8 +1,7 @@
 console.log("Loaded: attendance form ");
 
 import { useState } from "react";
-import { createAttendance } from "../../../../backend/src/services/attendanceService"; 
-
+import { createAttendance } from "./attendance.api.js";
 
 export default function AttendanceForm({ onCreated }) {
   const [date, setDate] = useState("");

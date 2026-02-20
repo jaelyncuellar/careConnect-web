@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getCarePlans } from "../../../../backend/src/services/carePlansService"; 
-import Card from "../../UI/Card"; 
+import { getCarePlans } from "./carePlans.api.js";
+// import Card from "../../UI/Card"; 
 
 export default function CarePlanList({ data }) {
   if (!data || data.length === 0) {

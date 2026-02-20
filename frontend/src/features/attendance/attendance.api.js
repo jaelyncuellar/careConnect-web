@@ -1,5 +1,5 @@
 import { stringify } from "ajv";
-import { apiRequest } from "../../api/api";
+import { apiRequest } from "../../shared/api/api.js";
 
 // GET all attendance
 export async function getAttendance() {

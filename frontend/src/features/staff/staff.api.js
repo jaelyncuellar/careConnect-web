@@ -1,8 +1,7 @@
-// src/services/staffService.js
+// ../../shared/api/api";
 
-const BASE_URL = "http://localhost:3000/staff";
+import { apiRequest } from "../../shared/api/api"; 
 
-export async function getAllStaff() {
-  const res = await fetch(BASE_URL);
-  return res.json();
+export function getAllStaff() {
+  return apiRequest("/staff"); 
 }

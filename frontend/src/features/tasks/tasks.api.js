@@ -1,4 +1,4 @@
-import { apiRequest } from "../../api/api"
+import { apiRequest } from "../../shared/api/api.js"
 
 export function getTasks() { 
     return apiRequest("/tasks");

@@ -3,7 +3,7 @@
 console.log("Loaded: Settings");
 
 import React, { useEffect, useState } from "react";
-import { getAllStaff } from "../../../backend/src/services/staffService"; // you’ll create this
+import { getAllStaff } from "../features/staff/staff.api";
 import { useNavigate } from "react-router-dom";
 
 export default function SettingsPage() {

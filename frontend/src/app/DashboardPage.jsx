@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getTasks } from "../../../backend/src/services/tasksService";
+import { getTasks } from "../features/tasks/tasks.api.js";
+
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {

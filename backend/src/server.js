@@ -4,6 +4,7 @@ dotenv.config();
 import express from "express"; 
 import cors from "cors"; 
 
+import authRouter from "./features/auth/auth.router.js"; 
 import attendanceRouter from "./features/attendance/attendance.router.js";
 import careGoalsRouter from "./features/careGoals/careGoals.router.js"; 
 import careObservationsRouter from "./features/careObservations/careObservations.router.js"; 
@@ -23,6 +24,7 @@ app.use(cors());
 app.use(express.json());
 
 // mount routers 
+app.use("/api/auth", authRouter); 
 app.use("/attendance", attendanceRouter);
 app.use("/careGoals", careGoalsRouter);
 app.use("/careObservations", careObservationsRouter);

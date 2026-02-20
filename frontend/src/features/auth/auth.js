@@ -1,27 +1,43 @@
-// src/services/auth.js 
+// src/auth/auth.js 
+
+const BASE_URL = "http://localhost:3000/api/auth"; 
 
 export const auth = { 
-    login: async (email, password) => { 
-        // fake api delay 
-        await new Promise((resolve) => setTimeout(resolve, 400)); 
+    async register(email, password){ 
+        const response = await fetch(`${BASE_URL}/register`, { 
+            method: "POST", 
+            headers: { 
+                "Content-Type": "application/json", 
+            }, 
+            body: JSON.stringify({email,password}), 
+        }); 
 
-        //hardcoded demo user
-        const validUser = { 
-            email: "test@careconnect.com", 
-            password: "123456", 
-            name: "CareConnect Staff"
-        }; 
-        if (email ===validUser.email && password === validUser.password) { 
-            // save user into localStorage 
-            localStorage.setItem("user", JSON.stringify(validUser)); 
-            return validUser; 
+        const data = await response.json(); 
+        if (!response.ok){ 
+            throw new Error(data.error || "Registration failed")
         }
-        throw new Error("Invaalid email or password"); 
+        localStorage.setItem("user", JSON.stringify(data)); 
+        return data;
     }, 
-    logout: () => { 
+    async login(email, password) { 
+        const response = await fetch(`${BASE_URL}/login`, { 
+            method: "POST", 
+            headers: { 
+                "Content-Type": "application/json", 
+            }, 
+            body: JSON.stringify({ email, password }),
+        }); 
+        const data = await response.json(); 
+        if (!response.ok){ 
+            throw new Error(data.error || "Login failed"); 
+        }
+        localStorage.setItem("user", JSON.stringify(data)); 
+        return data; 
+    }, 
+    logout() { 
         localStorage.removeItem("user"); 
     }, 
-    getUser: () => { 
+    getUser(){ 
         return JSON.parse(localStorage.getItem("user")); 
-    }
+    }, 
 };

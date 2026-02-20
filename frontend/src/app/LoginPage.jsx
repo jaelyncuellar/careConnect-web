@@ -1,10 +1,6 @@
-console.log("Loaded: Login");
-
-// src/pages/LoginPage.jsx 
-
 import { useState } from "react"; 
 import { useNavigate } from "react-router-dom";
-import { auth } from "../api/auth"
+import { auth } from "../features/auth/auth.js";
 
 export default function LoginPage() { 
     const navigate = useNavigate(); 
@@ -40,9 +36,8 @@ export default function LoginPage() {
     return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
-        
         <h1 className="text-2xl font-semibold text-center mb-6">
-          CareConnect Login
+          Login
         </h1>
 
         {error && (
@@ -84,6 +79,17 @@ export default function LoginPage() {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
+          <p className="text-sm text-center mt-4">
+            Don't have an account?{" "}
+            <span
+              onClick={() => navigate("/register")}
+              className="text-blue-600 cursor-pointer"
+              // onClick={() => navigate("/register")}
+              // className="text-blue-600 cursor-pointer"
+            >
+              Create one
+            </span> 
+          </p>
         </form>
       </div>
     </div>
