@@ -20,14 +20,14 @@ export default function Dashboard() {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold">Homebase</h1>
+        <h1 className="text-3xl font-bold">Dashboard</h1>
         <p className="text-gray-600">Welcome back! Here’s your daily overview.</p>
       </div>
 
-      {/* Quick Navigation Cards */}
+      {/* Navigation Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
-        <Link to="/careplans" className="p-6 bg-white shadow rounded-xl hover:shadow-lg transition">
+        <Link to="/care-plans" className="p-6 bg-white shadow rounded-xl hover:shadow-lg transition">
           <h2 className="text-xl font-semibold">Care Plans</h2>
           <p className="text-gray-600">View and manage client care plans.</p>
         </Link>

@@ -13,6 +13,11 @@ export async function createCarePlan(plan) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(plan),
   });
+  if (!res.ok){ 
+    const error = await res.json(); 
+    console.error("Backend error:", error); 
+    throw new Error("failed to create care plan");
+  }
 
   return res.json();
 }

@@ -1,9 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createCarePlan } from "./carePlans.api.js";
+import { getClients } from "../clients/clients.api.js"; 
+const { user } = useAuth(); 
 
 export default function CarePlanForm({ onCreated }) {
-  const [clientName, setClientName] = useState("");
-  const [clientId, setClientId] = useState("");
+  const [clients, setClients] = useState([]); 
+  const [selectedClient, setSelectedClient] = useState(""); 
+
+  useEffect(() => { 
+    async function fetchClients() { 
+      const data = await getClients(); 
+      setClients(data); 
+    }
+    fetchClients(); 
+  }, []); 
+
   const [planType, setPlanType] = useState("");
   const [goals, setGoals] = useState("");
   const [tasks, setTasks] = useState("");
@@ -14,30 +25,30 @@ export default function CarePlanForm({ onCreated }) {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const selected = clients.find((c)=>c.id ===selectedClient); 
+
+    if (!selected){ 
+      alert("Please select a client"); 
+      return; 
+    }
+    console.log("clients:", clients);
+    console.log("selected:", selected);
+
     const newPlan = {
-      clientName,
-      clientId,
-      planType,
-      goals: goals.split(",").map((g) => g.trim()).filter(Boolean),
-      tasks: tasks.split(",").map((t) => t.trim()).filter(Boolean),
-      disorders: disorders.split(",").map((d) => d.trim()).filter(Boolean),
-      meds: meds.split(",").map((m) => m.trim()).filter(Boolean),
-      food: food.split(",").map((f) => f.trim()).filter(Boolean),
-      lastUpdated: new Date().toISOString(),
+      clientId: selected.id, 
+      createdBy: user.id, 
+      focus_area: planType, 
+      start_date: new Date().toISOString().split("T")[0], 
+      // goals: goals.split(",").map((g) => g.trim()).filter(Boolean),
+      // tasks: tasks.split(",").map((t) => t.trim()).filter(Boolean),
+      // disorders: disorders.split(",").map((d) => d.trim()).filter(Boolean),
+      // meds: meds.split(",").map((m) => m.trim()).filter(Boolean),
+      // food: food.split(",").map((f) => f.trim()).filter(Boolean),
+      // lastUpdated: new Date().toISOString(),
     };
 
     const created = await createCarePlan(newPlan);
     onCreated(created);
-
-    // Reset
-    setClientName("");
-    setClientId("");
-    setPlanType("");
-    setGoals("");
-    setTasks("");
-    setDisorders("");
-    setMeds("");
-    setFood("");
   }
 
   return (
@@ -45,28 +56,22 @@ export default function CarePlanForm({ onCreated }) {
       onSubmit={handleSubmit}
       className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-6 rounded-xl border border-gray-200"
     >
-      {/* Client Name */}
+      {/* Client Dropdown */}
       <div>
-        <label className="text-sm text-gray-700 mb-1 block">Client Name</label>
-        <input
-          type="text"
-          value={clientName}
-          onChange={(e) => setClientName(e.target.value)}
+        <label className="text-sm text-gray-700 mb-1 block">Client</label>
+        <select
+          value={selectedClient}
+          onChange={(e) => setSelectedClient(e.target.value)}
           className="w-full border-gray-300 rounded-lg shadow-sm"
           required
-        />
-      </div>
-
-      {/* Client ID */}
-      <div>
-        <label className="text-sm text-gray-700 mb-1 block">Client ID</label>
-        <input
-          type="text"
-          value={clientId}
-          onChange={(e) => setClientId(e.target.value)}
-          className="w-full border-gray-300 rounded-lg shadow-sm"
-          required
-        />
+        >
+          <option value="">Select a client</option>
+          {clients.map((client)=> (
+            <option key={client.id}value={client.id}>
+              {client.first_name} {client.last_name} 
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Plan Type */}

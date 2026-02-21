@@ -25,6 +25,7 @@ export const create = async(req,res) => {
         res.status(500).json({ error: err.message });
         // res.status(500).json({ error: "failed to create attendance"}); 
     }
+    res.json(carePlan);
 }; 
 
 export const update = async(req,res) => { 
