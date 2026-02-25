@@ -1,9 +1,16 @@
 // backend/src/features/carePlans/carePlans.controller.js
 
 import * as carePlanService from "./carePlans.service.js"; 
+
+
 export const getAll = async(req, res) => { 
-    const plans = await carePlanService.getAllCarePlans(); 
-    res.json(plans); 
+    try { 
+        const plans_formatted = await carePlanService.getAllCarePlans(); 
+        res.json(plans_formatted); 
+    } catch (error) { 
+        console.error(error); 
+        res.status(500).json({ error: "Failed to fetch careplans"});
+    }
 }
 
 export const getOne = async(req,res) => { 
@@ -23,9 +30,7 @@ export const create = async(req,res) => {
     } catch (err) { 
         console.log(err)
         res.status(500).json({ error: err.message });
-        // res.status(500).json({ error: "failed to create attendance"}); 
     }
-    res.json(carePlan);
 }; 
 
 export const update = async(req,res) => { 

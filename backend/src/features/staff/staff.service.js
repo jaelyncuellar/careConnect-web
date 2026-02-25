@@ -22,18 +22,20 @@ export const createStaff = async(staff)=> {
   const { 
     first_name, 
     last_name, 
-    role,
-    phone, 
-    email, address, start_date, end_date, active
+    role, phone, 
+    email, password, address, 
+    start_date, end_date, active, 
    } = staff;
 
   const result = await pool.query(
     `INSERT INTO staff 
-    (first_name, last_name, role, phone, email, address, 
+    (first_name, last_name, role, phone, email, 
+    password, address, 
     start_date, end_date, active)
-    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
     RETURNING *`,
-    [first_name, last_name, role, phone, email, address, start_date, end_date, active]
+    [first_name, last_name, role, phone, 
+      email, password, address, start_date, end_date, active]
   );
 
   return result.rows[0];

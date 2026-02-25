@@ -1,7 +1,7 @@
 console.log("Loaded: CarePlans");
 
 import { useState, useEffect } from "react";
-import { getCarePlans, createCarePlan } from "./carePlans.api.js";
+import { getCarePlans } from "./carePlans.api.js";
 import CarePlanList from "./CarePlansList";
 import CarePlanForm from "./CarePlansForm";
 
@@ -12,15 +12,20 @@ export default function CarePlansPage() {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getCarePlans();
-      setCarePlans(data);
-      setLoading(false);
+      try { 
+        const data = await getCarePlans();
+        setCarePlans(data);
+      } catch(err) { 
+        console.error("Failed to fetch care plans", err);
+      } finally { 
+        setLoading(false);
+      }  
     }
     fetchData();
   }, []);
 
   function handleNewPlan(newPlan) {
-    setCarePlans((prev) => [newPlan, ...prev]);
+    setCarePlans((prev) => [newPlan, ...prev]); // take prev state, insert newPlan at beg, keep rest array 
     setShowForm(false);
   }
 

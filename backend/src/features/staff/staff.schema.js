@@ -2,7 +2,7 @@
 
 export const createStaffSchema = { 
     type:"object", 
-    required: [ "first_name", "last_name", "role", "phone", "email", "address", "start_date"],
+    required: [ "first_name", "last_name", "role", "phone", "email","password", "address", "start_date"],
     additionalProperties: false, 
     properties: { 
         first_name: { type: "string"}, 
@@ -17,6 +17,7 @@ export const createStaffSchema = {
         start_date: { type: "string", format: "date"}, 
         end_date: { type: "string", format: "date"}, 
         active: { type: "boolean"}, 
+        password: { type: "string", minLength: 4},
     },
 };
 
@@ -36,5 +37,6 @@ export const updateStaffSchema = {
         start_date: { type: "string", format: "date"}, 
         end_date: { type: "string", format: "date"}, 
         active: { type: "boolean"}, 
+        password: { type: "string", minLength: 4},
     },
 };

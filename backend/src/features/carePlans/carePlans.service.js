@@ -1,19 +1,57 @@
 // backend/src/features/carePlans/carePlans.service.js
+
 import { pool } from "../../db/db.js"
 
 export const getAllCarePlans = async() => { 
-    const result = await pool.query( 
-        "SELECT * FROM care_plans ORDER BY created_at DESC"
-    ); 
-    return result.rows; 
+    const result = await pool.query(
+        `SELECT 
+            cp.id, 
+            cp.focus_area, 
+            cp.created_by, 
+            cp.start_date,
+            c.first_name, 
+            c.last_name
+        FROM care_plans cp 
+        JOIN clients c ON cp.client_id = c.id 
+        ORDER BY cp.start_date DESC
+        `); 
+    const formatted = result.rows.map(row => ({
+        carePlanId: row.id, 
+        clientFullName: `${row.first_name} ${row.last_name}`, 
+        focusArea: row.focus_area, 
+        lastUpdated: row.start_date
+    }))
+    return formatted; 
 }
 export const getCarePlanById = async(id) => { 
     const result = await pool.query(
-        "SELECT * FROM care_plans WHERE id=$1", 
+        `SELECT 
+            cp.id, 
+            cp.focus_area, 
+            cp.created_by, 
+            cp.start_date,
+            c.first_name, 
+            c.last_name
+        FROM care_plans cp 
+        JOIN clients c ON cp.client_id = c.id 
+        WHERE cp.id=$1 
+        `,
         [id]
-    ); 
-    return result.rows[0]; 
+    );
+    if (result.rows.length === 0) return null; 
+
+    const row = result.rows[0]; 
+
+    const carePlan = {
+        carePlanId: row.id, 
+        clientFullName: `${row.first_name} ${row.last_name}`, 
+        focusArea: row.focus_area, 
+        lastUpdated: row.start_date
+    }
+    return carePlan; 
 }
+
+// this gets sent to schema - DB 
 export const createCarePlan = async(data) => { 
     const { 
         client_id, 
@@ -34,11 +72,20 @@ export const createCarePlan = async(data) => {
         `, 
         [client_id, created_by, focus_area, start_date, end_date, notes]
     );
-    return result.rows[0]; 
+
+    const row = result.rows[0];
+    const formatted = { 
+        carePlanId: row.id, 
+        focusArea: row.focus_area, 
+        lastUpdated: row.start_date
+    };
+
+
+    return formatted; 
 }
 
 export const updateCarePlan = async(id, data) => { 
-    const { focus_area, start_date, end_date, notes } = data; 
+    const { focusArea, startDate, endDate, notes } = data; 
      
     const result = await pool.query( 
         `
@@ -51,7 +98,7 @@ export const updateCarePlan = async(id, data) => {
         WHERE id=$5
         RETURNING * 
         `,
-        [focus_area, start_date, end_date, notes, id]
+        [focusArea, startDate, endDate, notes, id]
     ); 
     return result.rows[0]; 
 }

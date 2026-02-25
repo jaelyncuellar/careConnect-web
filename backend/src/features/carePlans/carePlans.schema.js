@@ -3,7 +3,7 @@
 export const createCarePlanSchema = {
   type: "object",
   required: ["client_id", "created_by", "focus_area", "start_date"],
-  additionalProperties: false, 
+  additionalProperties: false, // strict backend validation 
   properties: {
     client_id: { type: "string", format: "uuid" },
     created_by: { type: "string", format: "uuid" },

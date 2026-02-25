@@ -3,8 +3,23 @@
 import { pool } from "../../db/db.js"
 
 export const getAllClients = async() => { 
-    const result = await pool.query("SELECT * FROM clients"); 
-    return result.rows; 
+    const result = await pool.query("SELECT * FROM clients");
+    // format for frontend use 
+    const formatted = result.rows.map(row => ({ 
+        id: row.id, 
+        firstName: row.first_name,
+        lastName: row.last_name, 
+        levelOfCare: row.level_of_care, 
+        phone: row.phone, 
+        houseId: row.house_id, 
+        guardianFirstName: row.guardian_first_name,
+        guardianLastName: row.guardian_last_name,
+        startDate: row.start_date, 
+        endDate: row.end_date, 
+        meds: row.meds, 
+        active: row.active
+    })); 
+    return formatted; 
 }
 
 export const getClientById = async(id) => { 
@@ -17,16 +32,16 @@ export const getClientById = async(id) => {
 
 export const createClient = async(clientData) => { 
     const { 
-        first_name, 
-        last_name, 
-        level_of_care, 
+        firstName, 
+        lastName, 
+        levelOfCare, 
         phone, 
-        house_id, 
-        guardian_first_name, 
-        guardian_last_name, 
-        guardian_phone, 
-        start_date, 
-        end_date, 
+        houseId, 
+        guardianFirstName, 
+        guardianLastName, 
+        guardianPhone, 
+        startDate, 
+        endDate, 
         meds, 
         active
     } = clientData;
@@ -41,7 +56,7 @@ export const createClient = async(clientData) => {
         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
         RETURNING *
         `, 
-        [first_name, last_name, level_of_care, phone, house_id, guardian_first_name, guardian_last_name, guardian_phone, start_date, end_date, meds, active]
+        [firstName, lastName, levelOfCare, phone, houseId, guardianFirstName, guardianLastName, guardianPhone, startDate, endDate, meds, active]
     ); 
     return result.rows[0]; 
 }

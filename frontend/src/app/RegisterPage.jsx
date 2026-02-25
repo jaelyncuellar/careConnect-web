@@ -8,9 +8,14 @@ export default function RegisterPage() {
     const { register } = useAuth(); 
 
     const [form, setForm] = useState({ 
-        name: "",
+        first_name: "", 
+        last_name: "", 
+        role: "", 
+        phone: "", 
         email: "", 
         password: "", 
+        address: "", 
+        start_date: ""
     }); 
 
     const [error, setError] = useState(""); 
@@ -26,12 +31,10 @@ export default function RegisterPage() {
         e.preventDefault(); 
         setLoading(true); 
         setError(""); 
+
         try { 
-            const data = await auth.register(
-                form.name,
-                form.email,
-                form.password
-            ); 
+            const data = await auth.register(form); 
+            console.log("REGISTER RESPONSE:", data); // should show UUID 
             register(data);
             navigate("/dashboard"); 
         } catch (err) { 
@@ -51,43 +54,31 @@ export default function RegisterPage() {
                         {error}
                     </div>
                 )}
+
                 <form onSubmit={handleSubmit} className="space-y-4">
+                    <input name="first_name" placeholder="First Name" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
+                    <input name="last_name" placeholder="Last Name" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
                     <div>
-                        <label className="block mb-1 font-medium text-sm">Name</label>
-                        <input
-                            type="name"
-                            name="name"
-                            value={form.name}
+                        {/* <label className="block mb-1 font-medium text-sm">Role</label> */}
+                        <select
+                            name="role"
+                            value={form.role}
                             onChange={handleChange}
                             className="w-full border p-2 rounded-lg"
-                            placeholder="Jaelyn Cuellar"
                             required
-                        ></input>
+                        >
+                            <option value="">Select role</option>
+                            <option value="caregiver">Caregiver</option>
+                            <option value="nurse">Nurse</option>
+                            <option value="admin">Admin</option>
+                        </select>
                     </div>
-                    <div>
-                        <label className="block mb-1 font-medium text-sm">Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={form.email}
-                            onChange={handleChange}
-                            className="w-full border p-2 rounded-lg"
-                            placeholder="you@example.com"
-                            required
-                        ></input>
-                    </div>
-                    <div>
-                        <label className="block mb-1 font-medium text-sm">Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            value={form.password}
-                            onChange={handleChange}
-                            className="w-full border p-2 rounded-lg"
-                            placeholder="Password"
-                            required
-                        ></input>
-                    </div>
+                    <input name="phone" placeholder="Phone" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
+                    <input type="email" name="email" placeholder="Email" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
+                    <input type="password" name="password"  placeholder="Password" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
+                    <input name="address" placeholder="Address" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
+                    <input type="date" name="start_date" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
+
                     <button
                         type="submit"
                         disabled={loading}

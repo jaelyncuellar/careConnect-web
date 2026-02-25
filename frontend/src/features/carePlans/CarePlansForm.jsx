@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { createCarePlan } from "./carePlans.api.js";
 import { getClients } from "../clients/clients.api.js"; 
-const { user } = useAuth(); 
+import { useAuth } from "../auth/AuthContext.jsx";
 
 export default function CarePlanForm({ onCreated }) {
+  const { user } = useAuth(); 
   const [clients, setClients] = useState([]); 
   const [selectedClient, setSelectedClient] = useState(""); 
 
@@ -15,37 +16,42 @@ export default function CarePlanForm({ onCreated }) {
     fetchClients(); 
   }, []); 
 
-  const [planType, setPlanType] = useState("");
-  const [goals, setGoals] = useState("");
-  const [tasks, setTasks] = useState("");
-  const [disorders, setDisorders] = useState("");
-  const [meds, setMeds] = useState("");
-  const [food, setFood] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [focusArea, setFocusArea] = useState("");
+  const [notes, setNotes] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const selected = clients.find((c)=>c.id ===selectedClient); 
+    const selected = clients.find(
+      (c)=>String(c.id) ===String(selectedClient)
+    ); 
 
     if (!selected){ 
       alert("Please select a client"); 
       return; 
     }
+    if (!user?.id){ 
+      alert("User not authenticated"); 
+      return; 
+    }
+
+    // debug
     console.log("clients:", clients);
     console.log("selected:", selected);
+    console.log("User object:", user);
+    console.log("User ID type:", typeof user?.id);
 
+    // goes to API - service - DB 
     const newPlan = {
-      clientId: selected.id, 
-      createdBy: user.id, 
-      focus_area: planType, 
+      client_id: selected.id, 
+      created_by: user.id, // UUID string 
+      focus_area: focusArea, 
       start_date: new Date().toISOString().split("T")[0], 
-      // goals: goals.split(",").map((g) => g.trim()).filter(Boolean),
-      // tasks: tasks.split(",").map((t) => t.trim()).filter(Boolean),
-      // disorders: disorders.split(",").map((d) => d.trim()).filter(Boolean),
-      // meds: meds.split(",").map((m) => m.trim()).filter(Boolean),
-      // food: food.split(",").map((f) => f.trim()).filter(Boolean),
-      // lastUpdated: new Date().toISOString(),
+      notes,
+      ...(endDate && { end_date: endDate }) // only send if exists 
     };
+    console.log("Submitting plan:", newPlan); 
 
     const created = await createCarePlan(newPlan);
     onCreated(created);
@@ -68,85 +74,49 @@ export default function CarePlanForm({ onCreated }) {
           <option value="">Select a client</option>
           {clients.map((client)=> (
             <option key={client.id}value={client.id}>
-              {client.first_name} {client.last_name} 
+              {client.firstName} {client.lastName} 
             </option>
           ))}
         </select>
       </div>
 
-      {/* Plan Type */}
+      {/* end_date */}
       <div>
-        <label className="text-sm text-gray-700 mb-1 block">Plan Type</label>
+        <label className="text-sm text-gray-700 mb-1 block">End Date</label>
         <input
-          type="text"
-          value={planType}
-          onChange={(e) => setPlanType(e.target.value)}
-          placeholder="rehab, behavior, etc."
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          placeholder="YYYY-MM-DD"
           className="w-full border-gray-300 rounded-lg shadow-sm"
         />
       </div>
 
-      {/* Goals */}
+
+      {/* Focus Area */}
       <div>
-        <label className="text-sm text-gray-700 mb-1 block">Goals</label>
+        <label className="text-sm text-gray-700 mb-1 block">Plan Name</label>
         <input
           type="text"
-          value={goals}
-          onChange={(e) => setGoals(e.target.value)}
-          placeholder="comma-separated"
+          value={focusArea}
+          onChange={(e) => setFocusArea(e.target.value)}
+          placeholder="e.g. Community Safety"
           className="w-full border-gray-300 rounded-lg shadow-sm"
         />
       </div>
 
-      {/* Tasks */}
+      {/* Notes */}
       <div>
-        <label className="text-sm text-gray-700 mb-1 block">Tasks</label>
+        <label className="text-sm text-gray-700 mb-1 block">Notes</label>
         <input
           type="text"
-          value={tasks}
-          onChange={(e) => setTasks(e.target.value)}
-          placeholder="comma-separated"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="e.g. Complete community safety skills 3x per week"
           className="w-full border-gray-300 rounded-lg shadow-sm"
         />
       </div>
-
-      {/* Disorders */}
-      <div>
-        <label className="text-sm text-gray-700 mb-1 block">Disorders</label>
-        <input
-          type="text"
-          value={disorders}
-          onChange={(e) => setDisorders(e.target.value)}
-          placeholder="comma-separated"
-          className="w-full border-gray-300 rounded-lg shadow-sm"
-        />
-      </div>
-
-      {/* Medications */}
-      <div>
-        <label className="text-sm text-gray-700 mb-1 block">Medications</label>
-        <input
-          type="text"
-          value={meds}
-          onChange={(e) => setMeds(e.target.value)}
-          placeholder="comma-separated"
-          className="w-full border-gray-300 rounded-lg shadow-sm"
-        />
-      </div>
-
-      {/* Food / Allergies */}
-      <div>
-        <label className="text-sm text-gray-700 mb-1 block">Food / Sensory</label>
-        <input
-          type="text"
-          value={food}
-          onChange={(e) => setFood(e.target.value)}
-          placeholder="comma-separated"
-          className="w-full border-gray-300 rounded-lg shadow-sm"
-        />
-      </div>
-
-      {/* Submit Button - full width */}
+        {/* Submit Button - full width */}
       <div className="md:col-span-2">
         <button
           type="submit"
@@ -159,3 +129,41 @@ export default function CarePlanForm({ onCreated }) {
     </form>
   );
 }
+
+      {/* Disorders */}
+      {/* <div>
+        <label className="text-sm text-gray-700 mb-1 block">Related Disorders</label>
+        <input
+          type="text"
+          value={related_disorders}
+          onChange={(e) => setRelated_Disorders(e.target.value)}
+          placeholder="e.g. Autistic"
+          className="w-full border-gray-300 rounded-lg shadow-sm"
+        />
+      </div> */}
+
+      {/* Medications
+      <div>
+        <label className="text-sm text-gray-700 mb-1 block">Medications</label>
+        <input
+          type="text"
+          value={meds}
+          onChange={(e) => setMeds(e.target.value)}
+          placeholder="e.g. "
+          className="w-full border-gray-300 rounded-lg shadow-sm"
+        />
+      </div> */}
+
+      {/* Food / Allergies
+      <div>
+        <label className="text-sm text-gray-700 mb-1 block">Food / Sensory</label>
+        <input
+          type="text"
+          value={food}
+          onChange={(e) => setFood(e.target.value)}
+          placeholder="comma-separated"
+          className="w-full border-gray-300 rounded-lg shadow-sm"
+        />
+      </div> */}
+
+
