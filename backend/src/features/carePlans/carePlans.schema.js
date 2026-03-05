@@ -2,14 +2,14 @@
 
 export const createCarePlanSchema = {
   type: "object",
-  required: ["client_id", "created_by", "focus_area", "start_date"],
+  required: ["clientId", "createdBy", "focusArea", "startDate"],
   additionalProperties: false, // strict backend validation 
   properties: {
-    client_id: { type: "string", format: "uuid" },
-    created_by: { type: "string", format: "uuid" },
-    focus_area: { type: "string" },
-    start_date: { type: "string", format:"date" },
-    end_date: { type: "string" , format: "date"},
+    clientId: { type: "string", format: "uuid" },
+    createdBy: { type: "string", format: "uuid" },
+    focusArea: { type: "string" },
+    startDate: { type: "string", format:"date" },
+    endDate: { type: "string" , format: "date"},
     notes: { type: "string" },
   }
 }
@@ -17,9 +17,9 @@ export const updateCarePlanSchema = {
   type: "object",
   additionalProperties: false, 
   properties: {
-    focus_area: { type: "string" },
-    start_date: { type: "string", format:"date" },
-    end_date: { type: "string" , format: "date"},
+    focusArea: { type: "string" },
+    startDate: { type: "string", format:"date" },
+    endDate: { type: "string" , format: "date"},
     notes: { type: "string" },
   }
 }

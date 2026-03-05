@@ -1,5 +1,3 @@
-// backend/src/features/clients/clients.router.js
-
 import { Router } from "express"; 
 import { validateSchema } from "../../middleware/validate.schema.js"; 
 import { createClientSchema, updateClientSchema} from "./clients.schema.js"; 

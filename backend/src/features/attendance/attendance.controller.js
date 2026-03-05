@@ -1,10 +1,9 @@
 // backend/src/features/attendance/attendance.controller.js
-
 import * as attendanceService from "./attendance.service.js"; 
 
 export const getAll = async(req,res) => { 
     try { 
-        const attendances = await attendanceService.getAttendance();
+        const attendances = await attendanceService.getAllAttendance();
         res.json(attendances);
     } catch (err) { 
         res.status(500).json({ error: "failed to fetch attendance"}); 
@@ -14,15 +13,14 @@ export const getAll = async(req,res) => {
 export const getOne = async(req, res)=> { 
     try { 
         console.log("params:", req.params);
-        const attendance = await attendanceService.getOne(req.params.id); 
+        const attendance = await attendanceService.getAttendanceById(req.params.id); 
         if (!attendance) { 
             return res.status(404).json({message: "Attendance not found" }); 
         }
         res.json(attendance); 
     } catch (err) { 
         res.status(500).json({ error: err.message}); 
-
-        // res.status(500).json({ error: "Failed to fetch attendance"}); 
+        res.status(500).json({ error: "Failed to fetch attendance"}); 
     }
 }; 
 
@@ -33,10 +31,9 @@ export const create = async(req,res) => {
     } catch (err) { 
         console.log(err)
         res.status(500).json({ error: err.message });
-        // res.status(500).json({ error: "failed to create attendance"}); 
+        res.status(500).json({ error: "failed to create attendance"}); 
     }
 }; 
-
 
 export const update = async(req, res) => { 
     try {

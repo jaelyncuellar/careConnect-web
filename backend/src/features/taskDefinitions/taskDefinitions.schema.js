@@ -1,5 +1,3 @@
-// backend/src/features/taskDefinitions/taskDefinitions.schema.js 
-
 export const createTaskDefinitionSchema = {
   type: "object",
   required: ["name", "description"],
@@ -7,7 +5,7 @@ export const createTaskDefinitionSchema = {
   properties: {
     name: { type: "string" },
     description: { type: "string" },
-    care_plan_id: { type: "string", format:"uuid" }
+    carePlanId: { type: "string", format:"uuid" }
   }
 }
 
@@ -17,7 +15,7 @@ export const updateTaskDefinitionSchema = {
   properties: {
     name: { type: "string" },
     description: { type: "string" },
-    care_plan_id: { type: "string", format:"uuid" }
+    carePlanId: { type: "string", format:"uuid" }
   }
 }
 

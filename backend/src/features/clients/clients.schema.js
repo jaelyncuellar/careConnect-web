@@ -1,20 +1,18 @@
-// backend/src/features/clients/clients.schema.js
-
 export const createClientSchema = {
   type: "object",
-  required: ["first_name", "last_name", "level_of_care", "phone", "guardian_first_name", "guardian_last_name", "guardian_phone", "start_date"],
+  required: ["firstName", "lastName", "levelOfCare", "phone", "guardianFirstName", "guardianLastName", "guardianPhone", "startDate"],
   additionalProperties: false, 
   properties: {
-    first_name: { type: "string" },
-    last_name: { type: "string" },
-    level_of_care: { type: "string" },
+    firstName: { type: "string" },
+    lastName: { type: "string" },
+    levelOfCare: { type: "string" },
     phone: { type: "string" },
-    house_id: { type: "string" },
-    guardian_first_name: { type: "string" },
-    guardian_last_name: { type: "string" },
-    guardian_phone: { type: "string" },
-    start_date: { type: "string", format: "date" },
-    end_date: { type: "string",format: "date" },
+    houseId: { type: "string" },
+    guardianFirstName: { type: "string" },
+    guardianLastName: { type: "string" },
+    guardianPhone: { type: "string" },
+    startDate: { type: "string", format: "date" },
+    endDate: { type: "string",format: "date" },
     meds: { type: "string" },
     active: { type: "boolean" }
   }
@@ -23,16 +21,16 @@ export const updateClientSchema = {
   type: "object",
   additionalProperties: false, 
   properties: {
-    first_name: { type: "string" },
-    last_name: { type: "string" },
+    firstName: { type: "string" },
+    lastName: { type: "string" },
     level_of_care: { type: "string" },
     phone: { type: "string" },
-    house_id: { type: "string" },
-    guardian_first_name: { type: "string" },
-    guardian_last_name: { type: "string" },
+    houseId: { type: "string" },
+    guardianFirstName: { type: "string" },
+    guardianLastName: { type: "string" },
     guardian_phone: { type: "string" },
-    start_date: { type: "string", format: "date" },
-    end_date: { type: "string",format: "date" },
+    startDate: { type: "string", format: "date" },
+    endDate: { type: "string",format: "date" },
     meds: { type: "string" },
     active: { type: "boolean" }
   }

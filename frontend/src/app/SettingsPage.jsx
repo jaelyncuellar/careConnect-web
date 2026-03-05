@@ -11,8 +11,8 @@ import { useAuth } from "../features/auth/AuthContext.jsx";
 export default function SettingsPage() {
   const [staff, setStaff] = useState([]);
   const [profile, setProfile] = useState({
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     email: ""
   });
 
@@ -27,8 +27,7 @@ export default function SettingsPage() {
       // load curr user from localStorage (where user info stored by auth)
       if (user) { 
         setProfile({
-          first_name: user.first_name || "",
-          last_name: user.last_name || "",  
+          name: user.name || "", 
           email: user.email || ""
         }); 
       }   
@@ -62,19 +61,10 @@ export default function SettingsPage() {
 
         <div className="space-y-3">
           <div>
-            <label className="block text-gray-700">First Name</label>
+            <label className="block text-gray-700">Name</label>
             <input
-              name="first_name"
-              value= {profile.first_name}
-              onChange={handleProfileChange}
-              className="w-full border p-2 rounded-lg"
-            />
-          </div>
-          <div> 
-            <label className="block text-gray-700 mt-4">Last Name</label>
-            <input
-              name="last_name"
-              value={profile.last_name}
+              name="name"
+              value= {profile.name}
               onChange={handleProfileChange}
               className="w-full border p-2 rounded-lg"
             />
@@ -103,7 +93,7 @@ export default function SettingsPage() {
             {staff.map((person) => (
               <li key={person.id} className="py-3 flex justify-between items-center">
                 <span>
-                  <p className="font-medium">{person.first_name} {person.last_name}</p>
+                  <p className="font-medium">{person.name}</p>
                   <p className="text-gray-600 text-sm">{person.role}</p>
                 </span>
                 <span className="text-gray-500 text-sm">{person.phone}</span>

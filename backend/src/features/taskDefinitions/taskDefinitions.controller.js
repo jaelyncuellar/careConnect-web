@@ -1,5 +1,3 @@
-// backend/src/features/taskDefinitions/taskDefinitions.controller.js 
-
 import * as taskDefinitionsService from "./taskDefinitions.service.js"; 
 
 export const getAll = async(req, res) => { 

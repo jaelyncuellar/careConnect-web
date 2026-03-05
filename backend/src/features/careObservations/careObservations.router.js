@@ -1,6 +1,3 @@
-// backend/src/features/careObservations/careObservations.router.js
-
-
 import { Router } from "express"; 
 import { validateSchema } from "../../middleware/validate.schema.js"
 import { createCareObservationSchema, updateCareObservationSchema }  from "./careObservations.schema.js";
@@ -12,6 +9,7 @@ const router = Router();
 
 router.get("/", getAll);
 router.get("/:id", getOne); 
+// 1. validate body 2. call controller create fn 
 router.post("/", validateSchema(createCareObservationSchema), create); 
 router.patch("/:id", validateSchema(updateCareObservationSchema), update); 
 router.delete("/:id", remove); 

@@ -1,19 +1,18 @@
-// backend/src/features/careGoals/careGoals.service.js
-
 import { pool } from "../../db/db.js"
+import * as toCareGoalsDTO from "./careGoals.mapping.js"
 
 export const getAllCareGoals = async() => { 
     const result = await pool.query( 
         "SELECT * FROM care_goals ORDER BY created_at DESC"
     ); 
-    return result.rows; 
+    return result.rows.map(toCareGoalsDTO); 
 }
 export const getCareGoalById = async(id) => { 
     const result = await pool.query(
         "SELECT * FROM care_goals WHERE id=$1", 
         [id]
     ); 
-    return result.rows[0]; 
+    return toCareGoalsDTO(result.rows[0]); 
 }
 export const createCareGoal = async(data) => { 
     const { 
@@ -34,7 +33,7 @@ export const createCareGoal = async(data) => {
         `, 
         [care_plan_id, skill_name, description, target_frequency, target_period]
     );
-    return result.rows[0]; 
+    return toCareGoalsDTO(result.rows[0]);
 }
 
 export const updateCareGoal = async(id, data) => { 
@@ -49,12 +48,10 @@ export const updateCareGoal = async(id, data) => {
         [...values, id]
     ); 
     
-    return result.rows[0]; 
+    return toCareGoalsDTO(result.rows[0])
 }; 
 
 export const deleteCareGoal = async(id) => { 
-    await pool.query( 
-        "DELETE FROM care_goals WHERE id=$1", 
-        [id]
-    ); 
+    await pool.query("DELETE FROM care_goals WHERE id=$1", [id]);
+    return { success: true }; 
 }

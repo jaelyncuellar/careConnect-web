@@ -8,14 +8,14 @@ export default function RegisterPage() {
     const { register } = useAuth(); 
 
     const [form, setForm] = useState({ 
-        first_name: "", 
-        last_name: "", 
+        firstName: "", 
+        lastName: "", 
         role: "", 
         phone: "", 
         email: "", 
         password: "", 
         address: "", 
-        start_date: ""
+        startDate: ""
     }); 
 
     const [error, setError] = useState(""); 
@@ -56,8 +56,8 @@ export default function RegisterPage() {
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <input name="first_name" placeholder="First Name" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
-                    <input name="last_name" placeholder="Last Name" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
+                    <input name="firstName" placeholder="First Name" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
+                    <input name="lastName" placeholder="Last Name" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
                     <div>
                         {/* <label className="block mb-1 font-medium text-sm">Role</label> */}
                         <select
@@ -77,7 +77,7 @@ export default function RegisterPage() {
                     <input type="email" name="email" placeholder="Email" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
                     <input type="password" name="password"  placeholder="Password" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
                     <input name="address" placeholder="Address" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
-                    <input type="date" name="start_date" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
+                    <input type="date" name="startDate" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
 
                     <button
                         type="submit"

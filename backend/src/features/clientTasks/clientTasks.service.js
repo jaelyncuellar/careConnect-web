@@ -1,12 +1,11 @@
-// backend/src/features/clientTasks/clientTasks.service.js
-
-import { pool } from "../../db/db.js"
+import { pool } from "../../db/db.js";
+import * as toClientTasksDTO from "./clientTasks.mapping.js";
 
 export const getAllClientTasks = async() => {
   const result = await pool.query(
     "SELECT * FROM client_tasks ORDER BY created_at DESC"
   );
-  return result.rows;
+  return result.rows.map(toClientTasksDTO);
 }
 
 export const getClientTaskById= async(id) => {
@@ -14,25 +13,25 @@ export const getClientTaskById= async(id) => {
     "SELECT * FROM client_tasks WHERE id = $1",
     [id]
   );
-  return result.rows[0];
+  return toClientTasksDTO(result.rows[0]);
 }
 
 export const createClientTask = async(task)=> {
   const { 
-    client_id, 
+    clientId, 
     frequency, 
     active,
-    care_plan_id, 
-    task_definition_id
+    carePlanId, 
+    taskDefinitionId
    } = task;
   const result = await pool.query(
     `INSERT INTO client_tasks 
     (client_id, frequency, active, care_plan_id, task_definition_id)
     VALUES ($1,$2,$3,$4,$5)
     RETURNING *`,
-    [client_id, frequency, active, care_plan_id, task_definition_id]
+    [clientId, frequency, active, carePlanId, taskDefinitionId]
   );
-  return result.rows[0];
+  return toClientTasksDTO(result.rows[0]);
 }
 
 export const updateClientTask = async(id, data) => {
@@ -53,11 +52,10 @@ export const updateClientTask = async(id, data) => {
     `,
     [...values, id]
   );
-  return result.rows[0]
+  return toClientTasksDTO(result.rows[0]);
 };
 
-// DELETE staff
 export const deleteClientTask = async(id) => {
   await pool.query("DELETE FROM client_tasks WHERE id = $1", [id]);
-  return {message: "client_task deleted successfully"};
+  return {message: "client task deleted successfully"};
 }

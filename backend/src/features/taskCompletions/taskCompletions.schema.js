@@ -2,12 +2,12 @@
 
 export const createTaskCompletionSchema = {
   type: "object",
-  required: ["client_task_id", "staff_id", "initials"],
+  required: ["clientTaskId", "staffId", "initials"],
   additionalProperties: false, 
   properties: {
-    client_task_id: { type: "string", format:"uuid" },
-    staff_id: {  type: "string", format:"uuid" },
-    completed_at: { type: "string", format: "date-time" },
+    clientTaskId: { type: "string", format:"uuid" },
+    staffId: {  type: "string", format:"uuid" },
+    completedAt: { type: "string", format: "date-time" },
     initials: { type: "string" },
     notes: { type: "string" },
   }
@@ -17,9 +17,9 @@ export const updateTaskCompletionSchema = {
   type: "object",
   additionalProperties: false, 
   properties: {
-    client_task_id: {  type: "string", format:"uuid" },
-    staff_id: {  type: "string", format:"uuid" },
-    completed_at: { type: "string", format: "date-time" },
+    clientTaskId: {  type: "string", format:"uuid" },
+    staffId: {  type: "string", format:"uuid" },
+    completedAt: { type: "string", format: "date-time" },
     initials: { type: "string" },
     notes: { type: "string" },
   }

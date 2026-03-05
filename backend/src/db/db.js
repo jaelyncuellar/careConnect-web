@@ -1,8 +1,8 @@
-import dotenv from "dotenv";
+import dotenv from "dotenv"; // what do? 
 dotenv.config(); 
 
 import pkg from "pg"; 
-const { Pool } = pkg; 
+const { Pool } = pkg; // conx to the db ? 
 
 console.log("ENV CHECK:", {
   host: process.env.DB_HOST,
@@ -13,14 +13,14 @@ console.log("ENV CHECK:", {
 });
 
 export const pool = new Pool({ 
-    host: process.env.DB_HOST, 
+    host: process.env.DB_HOST, // this get data from .env ? 
     user: process.env.DB_USER, 
     database: process.env.DB_NAME, 
     password: process.env.DB_PASSWORD?.trim(),
     port: Number(process.env.DB_PORT), 
 }); 
 
-// optional: test connection
+// opt: test connection to db
 pool.connect()
   .then(client => {
     console.log("✅ PostgreSQL connected successfully!");

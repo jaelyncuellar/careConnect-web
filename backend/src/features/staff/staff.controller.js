@@ -1,5 +1,3 @@
-// backend/src/features/staff/staff.controller.js
-
 import * as staffService from "./staff.service.js"; 
 
 export const getAll = async (req, res) => { 

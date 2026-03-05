@@ -1,4 +1,4 @@
-// src/auth/auth.js 
+// handles server comm, talks to backE
 
 const BASE_URL = "http://localhost:3000/api/auth"; 
 
@@ -9,7 +9,7 @@ export const auth = {
             headers: { 
                 "Content-Type": "application/json", 
             }, 
-            body: JSON.stringify(userData), 
+            body: JSON.stringify(userData), // JSON obj -> JS obj (backend)
         }); 
 
         const data = await response.json(); 

@@ -1,5 +1,3 @@
-// backend/src/features/careGoals/careGoals.controller.js
-
 import * as careGoalsService from "./careGoals.service.js"; 
 export const getAll = async(req, res) => { 
     try {
@@ -24,7 +22,6 @@ export const getOne = async(req,res) => {
         res.status(500).json({ error: "failed to fetch caregoal"}); 
     }
 }
-
 
 export const create = async(req, res) => { 
     try { 

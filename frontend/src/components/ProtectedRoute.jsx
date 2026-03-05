@@ -1,3 +1,5 @@
+// checks: user ? -> proceed 
+
 import { Navigate } from "react-router-dom"; 
 import { useAuth } from "../features/auth/AuthContext"; 
 

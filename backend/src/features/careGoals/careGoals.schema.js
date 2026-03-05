@@ -1,26 +1,24 @@
-// backend/src/features/careGoals/careGoals.schema.js
-
 export const createCareGoalSchema = {
   type: "object",
-  required: ["care_plan_id", "skill_name"],
+  required: ["carePlanId", "focusArea"],
   additionalProperties: false, 
   properties: {
-    care_plan_id: { type: "string", format:"uuid" },
-    skill_name: { type: "string" },
+    carePlanId: { type: "string", format:"uuid" },
+    focusArea: { type: "string" },
     description: { type: "string" },
-    target_frequency: { type: "integer" },
-    target_period: { type: "string" },
+    targetFrequency: { type: "integer" },
+    targetPeriod: { type: "string" },
   }
 }
 export const updateCareGoalSchema = {
   type: "object",
   additionalProperties: false, 
   properties: {
-    care_plan_id: { type: "string", format:"uuid" },
-    skill_name: { type: "string" },
+    carePlanId: { type: "string", format:"uuid" },
+    focusArea: { type: "string" },
     description: { type: "string" },
-    target_frequency: { type: "integer" },
-    target_period: { type: "string" },
+    targetFrequency: { type: "integer" },
+    targetPeriod: { type: "string" },
   }
 }
 

@@ -1,24 +1,22 @@
-// backend/src/features/taskCompletions/taskCompletions.service.js
-
-import { pool } from "../../db/db.js"
+import { pool } from "../../db/db.js"; 
+import * as toTaskCompletionDTO from "./taskCompletions.mapping.js"
 
 export const getAllTaskCompletion = async() => { 
     const result = await pool.query( 
         "SELECT * FROM task_completions ORDER BY created_at DESC"
     ); 
-    return result.rows; 
+    return result.rows.map(toTaskCompletionDTO); 
 }
 export const getTaskCompletionById = async(id) => { 
     const result = await pool.query(
         "SELECT * FROM task_completions WHERE id=$1", 
         [id]
     ); 
-    return result.rows[0]; 
+    return toTaskCompletionDTO(result.rows[0]); 
 }
 export const createTaskCompletion = async(data) => { 
     const { 
-    client_task_id, staff_id, completed_at, initials, 
-    notes
+    clientTaskId, staffId, completedAt, initials,notes
     } = data; 
 
     const result = await pool.query( 
@@ -29,9 +27,9 @@ export const createTaskCompletion = async(data) => {
             ($1, $2, $3, $4, $5)
         RETURNING *
         `, 
-        [client_task_id, staff_id, completed_at, initials, notes]
+        [clientTaskId, staffId, completedAt, initials, notes]
     );
-    return result.rows[0]; 
+    return toTaskCompletionDTO(result.rows[0]); 
 }
 
 export const updateTaskCompletion = async(id, data) => { 
@@ -46,7 +44,7 @@ export const updateTaskCompletion = async(id, data) => {
         [...values, id]
     ); 
     
-    return result.rows[0]; 
+    return toTaskCompletionDTO(result.rows[0]); 
 }; 
 
 export const deleteTaskCompletion = async(id) => { 

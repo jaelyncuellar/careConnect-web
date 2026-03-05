@@ -1,5 +1,3 @@
-// backend/src/features/taskCompletions/taskCompletions.controller.js
-
 import * as taskCompletionsService from "./taskCompletions.service.js"; 
 
 export const getAll = async(req, res) => { 

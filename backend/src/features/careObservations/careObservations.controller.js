@@ -1,10 +1,9 @@
-// backend/src/features/careObservations/careObservations.controller.js
-
-import * as careObservationsService from "./careObservations.service.js"; 
+import * as careObservationsService from "./careObservations.service.js";
+ 
 export const getAll = async(req, res) => { 
     try {
         const careObservations = await careObservationsService.getAllCareObservations(); 
-        res.json(careObservations); 
+        res.json(careObservations); // converts JSON to JS 
     } catch (err) { 
         res.status(500).json({err: "failed to fetch careObservations"}); 
     }
@@ -54,9 +53,11 @@ export const update = async(req,res) => {
 export const remove = async(req, res) => { 
     try { 
         await careObservationsService.deleteCareObservation(req.params.id); 
+        if (rowCount === 0) { // deleted confirmation 
+            return res.status(404).json({ error: "Not found" });
+        }
     } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to delete care observation" });
     }
-    
 }

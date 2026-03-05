@@ -1,25 +1,9 @@
-// backend/src/features/clients/clients.schema.js
-
-import { pool } from "../../db/db.js"
+import { pool } from "../../db/db.js"; 
+import * as toClientsDTO from "./clients.mapping.js"
 
 export const getAllClients = async() => { 
     const result = await pool.query("SELECT * FROM clients");
-    // format for frontend use 
-    const formatted = result.rows.map(row => ({ 
-        id: row.id, 
-        firstName: row.first_name,
-        lastName: row.last_name, 
-        levelOfCare: row.level_of_care, 
-        phone: row.phone, 
-        houseId: row.house_id, 
-        guardianFirstName: row.guardian_first_name,
-        guardianLastName: row.guardian_last_name,
-        startDate: row.start_date, 
-        endDate: row.end_date, 
-        meds: row.meds, 
-        active: row.active
-    })); 
-    return formatted; 
+    return result.rows.map(toClientsDTO); 
 }
 
 export const getClientById = async(id) => { 
@@ -27,30 +11,25 @@ export const getClientById = async(id) => {
         "SELECT * FROM clients WHERE id=$1", 
         [id]
     ); 
-    return result.rows[0]; 
+    return toClientsDTO(result.rows[0]); 
 }
 
 export const createClient = async(clientData) => { 
     const { 
-        firstName, 
-        lastName, 
-        levelOfCare, 
-        phone, 
-        houseId, 
+        firstName, lastName, 
+        levelOfCare, phone, houseId, 
         guardianFirstName, 
         guardianLastName, 
         guardianPhone, 
-        startDate, 
-        endDate, 
-        meds, 
-        active
+        startDate, endDate, 
+        meds, active
     } = clientData;
     const result = await pool.query( 
         `INSERT INTO clients
         (first_name, last_name, 
-        level_of_care, phone, 
-        house_id, guardian_first_name, 
-        guardian_last_name,  guardian_phone, 
+        level_of_care, phone, house_id, 
+        guardian_first_name, guardian_last_name, 
+        guardian_phone, 
         start_date, end_date, 
         meds, active)
         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
@@ -58,7 +37,7 @@ export const createClient = async(clientData) => {
         `, 
         [firstName, lastName, levelOfCare, phone, houseId, guardianFirstName, guardianLastName, guardianPhone, startDate, endDate, meds, active]
     ); 
-    return result.rows[0]; 
+    return toClientsDTO(result.rows[0]); 
 }
 
 export const updateClient = async(id, clientData) => { 
@@ -73,8 +52,8 @@ export const updateClient = async(id, clientData) => {
         `UPDATE clients SET ${setClause} WHERE id=$${fields.length+1} RETURNING *`, 
         [...values, id]
     ); 
-    
-    return result.rows[0]; 
+
+    return toClientsDTO(result.rows[0]); 
 }; 
 
 export const deleteClient = async(id) =>  {

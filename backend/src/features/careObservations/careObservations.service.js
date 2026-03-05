@@ -1,25 +1,26 @@
-// backend/src/features/careObservations/careObservations.service.js
-
-import { pool } from "../../db/db.js"
+import { pool } from "../../db/db.js";
+import * as toCareObservationsDTO from "./careObservations.mapping.js";
 
 export const getAllCareObservations = async() => { 
     const result = await pool.query( 
         "SELECT * FROM care_observations ORDER BY created_at DESC"
     ); 
-    return result.rows; 
+    return result.rows.map(toCareObservationsDTO); 
 }
+
 export const getCareObservationById = async(id) => { 
     const result = await pool.query(
         "SELECT * FROM care_observations WHERE id=$1", 
         [id]
     ); 
-    return result.rows[0]; 
+    return toCareObservationsDTO(result.rows[0]); 
 }
+
 export const createCareObservation = async(data) => { 
     const { 
-        care_goal_id,
-        staff_id,
-        observed_at,
+        careGoalId,
+        staffId,
+        observedAt,
         success,
         notes,
     } = data; 
@@ -32,9 +33,9 @@ export const createCareObservation = async(data) => {
             ($1, $2, $3, $4, $5)
         RETURNING *
         `, 
-        [care_goal_id, staff_id, observed_at, success, notes]
+        [careGoalId, staffId, observedAt, success, notes]
     );
-    return result.rows[0]; 
+    return toCareObservationsDTO(result.rows[0]);
 }
 
 export const updateCareObservation = async(id, data) => { 
@@ -49,12 +50,10 @@ export const updateCareObservation = async(id, data) => {
         [...values, id]
     ); 
     
-    return result.rows[0]; 
+    return toCareObservationsDTO(result.rows[0]);
 }; 
 
 export const deleteCareObservation = async(id) => { 
-    await pool.query( 
-        "DELETE FROM care_observations WHERE id=$1", 
-        [id]
-    ); 
+    await pool.query("DELETE FROM care_observations WHERE id=$1", [id]); 
+    return { success: true };
 }

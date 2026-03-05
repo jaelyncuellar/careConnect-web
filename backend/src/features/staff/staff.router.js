@@ -1,5 +1,3 @@
-// backend/src/features/staff/staff.router.js
-
 import express from "express"; 
 import { validateSchema } from "../../middleware/validate.schema.js"
 import { createStaffSchema, updateStaffSchema }  from "./staff.schema.js";

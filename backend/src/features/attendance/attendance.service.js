@@ -1,30 +1,30 @@
-// backend/src/features/attendance/attendance.service.js
 
 import { pool } from "../../db/db.js"; 
+import * as attendanceDTO from "./attendance.mapping.js"; 
 
-export const getAttendance = async() => {
+export const getAllAttendance = async() => {
   const result = await pool.query(
     "SELECT * FROM attendance ORDER BY shift_date ASC"
-  );
-  return result.rows;
+  ); 
+  return result.rows.map(attendanceDTO);// JS object 
 }
 
-export const getOne = async(id) =>{
+export const getAttendanceById = async(id) =>{
   const result = await pool.query(
     "SELECT * FROM attendance WHERE id=$1",
     [id]
   );
-  return result.rows[0];
+  return attendanceDTO(result.rows[0]);
 }
 
 // CREATE attendance (admin)
 export const createAttendance = async(attendance) => {
   const { 
-    staff_id, 
-    client_id,
-    shift_date,
-    time_in,
-    time_out
+    staffId, 
+    clientId,
+    shiftDate,
+    timeIn,
+    timeOut
     } = attendance;
     
     const result = await pool.query( 
@@ -34,14 +34,13 @@ export const createAttendance = async(attendance) => {
         VALUES ($1, $2, $3, $4, $5)
         RETURNING *
         `, 
-        [staff_id, client_id, shift_date, time_in, time_out]
+        [staffId, clientId, shiftDate, timeIn, timeOut]
     ); 
-    return result.rows[0]
+    return attendanceDTO(result.rows[0]);
 }
 
-// UPDATE attendance
 export const updateAttendance = async(id, attendance) => {
-  const { time_in, time_out, status } = attendance;
+  const { timeIn, timeOut, status } = attendance;
 
   const result = await pool.query(
     `
@@ -53,13 +52,12 @@ export const updateAttendance = async(id, attendance) => {
     WHERE id = $4
     RETURNING *
     `,
-    [time_in, time_out, status, id]
+    [timeIn, timeOut, status, id]
   );
-  return result.rows[0];
+  return attendanceDTO(result.rows[0]);
 }
 
-// DELETE attendance
 export const deleteAttendance = async(id) => {
-  await pool.query("DELETE FROM attendance WHERE id = $1", [id]);
-  return true;
+  await pool.query("DELETE FROM attendance WHERE id = $1",[id]);
+  return { success: true };
 }

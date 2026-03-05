@@ -1,5 +1,3 @@
-// backend/src/features/clientTasks/clientTasks.controller.js
-
 import * as clientTaskService from "./clientTasks.service.js"; 
 
 export const getAll = async (req, res) => { 

@@ -1,12 +1,11 @@
-// backend/src/features/staff/staff.service.js
-
-import { pool } from "../../db/db.js"
+import { pool } from "../../db/db.js"; 
+import * as toStaffDTO from "./staff.mapping.js";
 
 export const getAllStaff = async() => {
   const result = await pool.query(
     "SELECT * FROM staff ORDER BY last_name ASC"
   );
-  return result.rows;
+  return result.rows.map(toStaffDTO);
 }
 
 export const getStaffById= async(id) => {
@@ -14,17 +13,16 @@ export const getStaffById= async(id) => {
     "SELECT * FROM staff WHERE id = $1",
     [id]
   );
-  return result.rows[0];
+  return toStaffDTO(result.rows[0]);
 }
 
-// CREATE staff
 export const createStaff = async(staff)=> {
   const { 
-    first_name, 
-    last_name, 
+    firstName, 
+    lastName, 
     role, phone, 
     email, password, address, 
-    start_date, end_date, active, 
+    startDate, endDate, active, 
    } = staff;
 
   const result = await pool.query(
@@ -34,11 +32,10 @@ export const createStaff = async(staff)=> {
     start_date, end_date, active)
     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
     RETURNING *`,
-    [first_name, last_name, role, phone, 
-      email, password, address, start_date, end_date, active]
+    [firstName, lastName, role, phone, 
+      email, password, address, startDate, endDate, active]
   );
-
-  return result.rows[0];
+  return toStaffDTO(result.rows[0]);
 }
 
 export const updateStaff = async(id, data) => {
@@ -63,7 +60,6 @@ export const updateStaff = async(id, data) => {
   return result.rows[0] || null; // in case no update
 };
 
-// DELETE staff
 export const deleteStaff = async(id) => {
   await pool.query("DELETE FROM staff WHERE id = $1", [id]);
   return {message: "staff deleted successfully"};

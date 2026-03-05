@@ -6,7 +6,7 @@ import { createAttendanceSchema, updateAttendanceSchema } from "./attendance.sch
 import { getAll, getOne, create, update, remove, test
 } from "./attendance.controller.js";
 
-const router = express.Router(); 
+const router = express.Router(); // how can import express if not imported in this file? 
 
 // CRUD routes 
 router.get("/", getAll); 

@@ -1,5 +1,3 @@
-// backend/src/features/schedules/schedules.router.js
-
 import express from "express"; 
 import { validateSchema } from "../../middleware/validate.schema.js"
 import { createScheduleSchema, updateScheduleSchema } from "./schedules.schema.js";

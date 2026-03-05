@@ -1,23 +1,22 @@
-// backend/src/features/taskDefinitions/taskDefinitions.service.js 
-
 import { pool } from "../../db/db.js"
+import * as toTaskDefinitionsDTO from "./taskDefinitions.mapping.js";
 
 export const getAllTaskDefinitions = async() => { 
     const result = await pool.query( 
         "SELECT * FROM task_definitions ORDER BY created_at DESC"
     ); 
-    return result.rows; 
+    return result.rows.map(toTaskDefinitionsDTO); 
 }
 export const getTaskDefinitionById = async(id) => { 
     const result = await pool.query(
         "SELECT * FROM task_definitions WHERE id=$1", 
         [id]
     ); 
-    return result.rows[0]; 
+    return toTaskDefinitionsDTO(result.rows[0]); 
 }
 export const createTaskDefinition = async(data) => { 
     const { 
-    name, description, care_plan_id
+    name, description, carePlanId
     } = data; 
 
     const result = await pool.query( 
@@ -28,9 +27,9 @@ export const createTaskDefinition = async(data) => {
             ($1, $2, $3)
         RETURNING *
         `, 
-        [name, description, care_plan_id]
+        [name, description, carePlanId]
     );
-    return result.rows[0]; 
+    return toTaskDefinitionsDTO(result.rows[0]); 
 }
 
 export const updateTaskDefinition = async(id, data) => { 
@@ -45,7 +44,7 @@ export const updateTaskDefinition = async(id, data) => {
         [...values, id]
     ); 
     
-    return result.rows[0]; 
+    return toTaskDefinitionsDTO(result.rows[0]); 
 }; 
 
 export const deleteTaskDefinition = async(id) => { 

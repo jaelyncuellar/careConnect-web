@@ -1,5 +1,3 @@
-// backend/src/features/schedules/schedules.controller.js
-
 import * as scheduleService from "./schedules.service.js"; 
 
 export const getAll = async (req, res) => { 

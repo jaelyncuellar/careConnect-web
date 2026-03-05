@@ -44,12 +44,12 @@ export default function CarePlanForm({ onCreated }) {
 
     // goes to API - service - DB 
     const newPlan = {
-      client_id: selected.id, 
-      created_by: user.id, // UUID string 
-      focus_area: focusArea, 
-      start_date: new Date().toISOString().split("T")[0], 
+      clientId: selected.id, 
+      createdBy: user.id, // UUID string 
+      focusArea: focusArea, 
+      startDate: new Date().toISOString().split("T")[0], 
       notes,
-      ...(endDate && { end_date: endDate }) // only send if exists 
+      ...(endDate && { endDate: endDate }) // only send if exists 
     };
     console.log("Submitting plan:", newPlan); 
 
@@ -80,7 +80,7 @@ export default function CarePlanForm({ onCreated }) {
         </select>
       </div>
 
-      {/* end_date */}
+      {/* endDate */}
       <div>
         <label className="text-sm text-gray-700 mb-1 block">End Date</label>
         <input

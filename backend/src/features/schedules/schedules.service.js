@@ -1,11 +1,9 @@
-
-// backend/src/features/schedules/schedules.service.js
-
-import { pool } from "../../db/db.js"
+import { pool } from "../../db/db.js"; 
+import * as toSchedulesDTO from "./schedules.mapping.js"
 
 export const getAllSchedules = async() => { 
     const result = await pool.query("SELECT * FROM schedules"); 
-    return result.rows; 
+    return result.rows.map(toSchedulesDTO);
 }
 
 export const getScheduleById = async(id) => { 
@@ -13,16 +11,16 @@ export const getScheduleById = async(id) => {
         "SELECT * FROM schedules WHERE id=$1", 
         [id]
     ); 
-    return result.rows[0]; 
+    return toSchedulesDTO(result.rows[0]); 
 }
 
 export const createSchedule = async(data) => { 
     const { 
-        staff_id, 
-        client_id, 
-        shift_date, 
-        start_time, 
-        end_time, 
+        staffId, 
+        clientId, 
+        shiftDate, 
+        startTime, 
+        endTime, 
     } = data;
     const result = await pool.query( 
         `INSERT INTO schedules
@@ -31,9 +29,9 @@ export const createSchedule = async(data) => {
         VALUES ($1,$2,$3,$4,$5)
         RETURNING *
         `, 
-        [staff_id, client_id, shift_date,start_time, end_time]
+        [staffId, clientId, shiftDate, startTime, endTime]
     ); 
-    return result.rows[0]; 
+    return toSchedulesDTO(result.rows[0]); 
 }
 
 export const updateSchedule = async(id, data) => { 
@@ -48,7 +46,7 @@ export const updateSchedule = async(id, data) => {
         `UPDATE schedules SET ${setClause} WHERE id=$${fields.length+1} RETURNING *`, 
         [...values, id]
     ); 
-    return result.rows[0]; 
+    return toSchedulesDTO(result.rows[0]); 
 }; 
 
 export const deleteSchedule = async(id) =>  {

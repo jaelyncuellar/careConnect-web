@@ -1,6 +1,5 @@
-// backend/src/features/carePlans/carePlans.service.js
-
 import { pool } from "../../db/db.js"
+import * as toCarePlanDTO from "./carePlans.mapping.js"
 
 export const getAllCarePlans = async() => { 
     const result = await pool.query(
@@ -15,14 +14,9 @@ export const getAllCarePlans = async() => {
         JOIN clients c ON cp.client_id = c.id 
         ORDER BY cp.start_date DESC
         `); 
-    const formatted = result.rows.map(row => ({
-        carePlanId: row.id, 
-        clientFullName: `${row.first_name} ${row.last_name}`, 
-        focusArea: row.focus_area, 
-        lastUpdated: row.start_date
-    }))
-    return formatted; 
+    return result.rows.map(toCarePlanDTO(row))
 }
+
 export const getCarePlanById = async(id) => { 
     const result = await pool.query(
         `SELECT 
@@ -39,27 +33,13 @@ export const getCarePlanById = async(id) => {
         [id]
     );
     if (result.rows.length === 0) return null; 
-
-    const row = result.rows[0]; 
-
-    const carePlan = {
-        carePlanId: row.id, 
-        clientFullName: `${row.first_name} ${row.last_name}`, 
-        focusArea: row.focus_area, 
-        lastUpdated: row.start_date
-    }
-    return carePlan; 
+    return toCarePlanDTO(result.rows[0]); 
 }
 
-// this gets sent to schema - DB 
 export const createCarePlan = async(data) => { 
     const { 
-        client_id, 
-        created_by, 
-        focus_area, 
-        start_date, 
-        end_date, 
-        notes
+        clientId, createdBy, focusArea, 
+        startDate, endDate, notes
     } = data; 
 
     const result = await pool.query( 
@@ -70,18 +50,15 @@ export const createCarePlan = async(data) => {
             ($1, $2, $3, $4, $5, $6)
         RETURNING *
         `, 
-        [client_id, created_by, focus_area, start_date, end_date, notes]
+        [clientId, createdBy, focusArea, startDate, endDate, notes]
     );
 
     const row = result.rows[0];
-    const formatted = { 
-        carePlanId: row.id, 
+    return { 
+        carePlanId: row.id,// return ID so can redirect when nec. , attach more info 
         focusArea: row.focus_area, 
-        lastUpdated: row.start_date
+        lastUpdated: row.updated_at 
     };
-
-
-    return formatted; 
 }
 
 export const updateCarePlan = async(id, data) => { 
@@ -100,12 +77,10 @@ export const updateCarePlan = async(id, data) => {
         `,
         [focusArea, startDate, endDate, notes, id]
     ); 
-    return result.rows[0]; 
+    return toCarePlanDTO(result.rows[0]);  // do i want to return the entire row? 
 }
 
 export const deleteCarePlan = async(id) => { 
-    await pool.query( 
-        "DELETE FROM care_plans WHERE id=$1", 
-        [id]
-    ); 
+    await pool.query( "DELETE FROM care_plans WHERE id=$1 ", [id]); 
+    return { success: true };
 }

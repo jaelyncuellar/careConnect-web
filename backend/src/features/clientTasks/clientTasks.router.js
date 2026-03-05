@@ -1,6 +1,3 @@
-// backend/src/features/clientTasks/clientTasks.router.js
-
-
 import express from "express"; 
 const router = express.Router(); 
 import { validateSchema } from "../../middleware/validate.schema.js"

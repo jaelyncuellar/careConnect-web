@@ -1,12 +1,9 @@
-// backend/src/features/carePlans/carePlans.controller.js
-
 import * as carePlanService from "./carePlans.service.js"; 
-
 
 export const getAll = async(req, res) => { 
     try { 
-        const plans_formatted = await carePlanService.getAllCarePlans(); 
-        res.json(plans_formatted); 
+        const plans = await carePlanService.getAllCarePlans(); 
+        res.json(plans); 
     } catch (error) { 
         console.error(error); 
         res.status(500).json({ error: "Failed to fetch careplans"});

@@ -1,15 +1,13 @@
-// backend/src/features/clientTasks/clientTasks.schema.js
-
 export const createClientTaskSchema = { 
     type:"object", 
-    required: [ "client_id", "care_plan_id"],
+    required: [ "clientId", "carePlanId"],
     additionalProperties: false, 
     properties: { 
-        client_id: { type: "string", format: "uuid"}, 
+        clientId: { type: "string", format: "uuid"}, 
         frequency: { type: "string"}, 
         active: { type: "boolean"}, 
-        care_plan_id: { type: "string", format: "uuid"}, 
-        task_definition_id: { type: "string", format: "uuid"}, 
+        carePlanId: { type: "string", format: "uuid"}, 
+        taskDefinitionId: { type: "string", format: "uuid"}, 
     },
 };
 
@@ -17,10 +15,10 @@ export const updateClientTaskSchema = {
     type:"object", 
     additionalProperties: false, 
     properties: { 
-        client_id: { type: "string", format: "uuid"}, 
+        clientId: { type: "string", format: "uuid"}, 
         frequency: { type: "string"}, 
         active: { type: "boolean"}, 
-        care_plan_id: { type: "string", format: "uuid"}, 
-        task_definition_id: { type: "string", format: "uuid"}, 
+        carePlanId: { type: "string", format: "uuid"}, 
+        taskDefinitionId: { type: "string", format: "uuid"}, 
     },
 };
