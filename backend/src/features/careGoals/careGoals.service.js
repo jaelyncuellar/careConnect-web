@@ -37,10 +37,16 @@ export const createCareGoal = async(data) => {
 }
 
 export const updateCareGoal = async(id, data) => { 
-    const fields = Object.keys(data); 
-    if (fields.length === 0) return null; 
+    const fieldMap = {
+        focusArea: "focus_area",
+        description: "description",
+        targetFrequency: "target_frequency",
+        targetPeriod: "target_period"
+    };
+    const fields = Object.keys(data).filter(f => fieldMap[f]);
+    if (fields.length === 0) return null;
+    const values = fields.map(f => data[f]);
 
-    const values = Object.values(data); 
     const setClause = fields.map((f,i) => `"${f}" = $${i+1}`).join(", "); 
     
     const result = await pool.query( 

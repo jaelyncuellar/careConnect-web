@@ -39,25 +39,31 @@ export const createStaff = async(staff)=> {
 }
 
 export const updateStaff = async(id, data) => {
- // delete data.id; // prevent updating primary key (id)
-  const fields = Object.keys(data); 
+  const fieldMap = {
+      phone: "phone",
+      email: "email",
+      address: "address",
+      endDate: "end_date",
+      active: "active"
+  };
+
+  const fields = Object.keys(data).filter(f=>fieldMap[f]);
   if (fields.length === 0) return null;
-  
-  const values = Object.values(data);
+  const values = fields.map(f=>data[f]);
+
   const setClause = fields
     .map((f, i) => `"${f}" = $${i + 1}`)
     .join(", ");
 
   const result = await pool.query(
     `
-    UPDATE staff
-    SET ${setClause}
+    UPDATE staff SET ${setClause}
     WHERE id = $${fields.length + 1}
     RETURNING *
     `,
     [...values, id]
   );
-  return result.rows[0] || null; // in case no update
+  return toStaffDTO(result.rows[0]);
 };
 
 export const deleteStaff = async(id) => {

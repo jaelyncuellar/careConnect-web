@@ -1,5 +1,3 @@
-// backend/src/features/taskCompletions/taskCompletions.router.js
-
 import { Router } from "express"; 
 import { validateSchema } from "../../middleware/validate.schema.js"
 import { createTaskCompletionSchema, updateTaskCompletionSchema}  from "./taskCompletions.schema.js";

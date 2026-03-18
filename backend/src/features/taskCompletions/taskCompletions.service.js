@@ -16,7 +16,7 @@ export const getTaskCompletionById = async(id) => {
 }
 export const createTaskCompletion = async(data) => { 
     const { 
-    clientTaskId, staffId, completedAt, initials,notes
+    clientTaskId, staffId, completedAt, initials, notes
     } = data; 
 
     const result = await pool.query( 
@@ -33,10 +33,17 @@ export const createTaskCompletion = async(data) => {
 }
 
 export const updateTaskCompletion = async(id, data) => { 
-    const fields = Object.keys(data); 
+    const fieldMap = {
+        staffId: "staff_id",
+        completedAt: "completed_at",
+        initials: "initials",
+        notes: "notes"
+    };
+    const fields = Object.keys(data).filter(f=>fieldMap[f]);
+  
     if (fields.length === 0) return null; 
 
-    const values = Object.values(data); 
+    const values = fields.map(f=>data[f]); 
     const setClause = fields.map((f,i) => `"${f}" = $${i+1}`).join(", "); 
     
     const result = await pool.query( 

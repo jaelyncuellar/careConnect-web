@@ -16,34 +16,37 @@ export const getTaskDefinitionById = async(id) => {
 }
 export const createTaskDefinition = async(data) => { 
     const { 
-    name, description, carePlanId
+    title, description
     } = data; 
 
     const result = await pool.query( 
         `
         INSERT INTO task_definitions 
-            (name, description, care_plan_id) 
+            (title, description) 
         VALUES 
             ($1, $2, $3)
         RETURNING *
         `, 
-        [name, description, carePlanId]
+        [title, description]
     );
     return toTaskDefinitionsDTO(result.rows[0]); 
 }
 
 export const updateTaskDefinition = async(id, data) => { 
-    const fields = Object.keys(data); 
-    if (fields.length === 0) return null; 
 
-    const values = Object.values(data); 
-    const setClause = fields.map((f,i) => `"${f}" = $${i+1}`).join(", "); 
-    
+    const { title, description } = data; 
+
     const result = await pool.query( 
-        `UPDATE task_definitions SET ${setClause} WHERE id=$${fields.length+1} RETURNING *`, 
-        [...values, id]
-    ); 
-    
+        `
+        UPDATE task_definitions 
+        SET
+            title = COALESCE($1, title), 
+            description = COALESCE($2, description) 
+        WHERE id=$3
+        RETURNING *
+        `, 
+        [title, description, id]
+    );
     return toTaskDefinitionsDTO(result.rows[0]); 
 }; 
 

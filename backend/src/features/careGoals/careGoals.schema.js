@@ -14,7 +14,6 @@ export const updateCareGoalSchema = {
   type: "object",
   additionalProperties: false, 
   properties: {
-    carePlanId: { type: "string", format:"uuid" },
     focusArea: { type: "string" },
     description: { type: "string" },
     targetFrequency: { type: "integer" },

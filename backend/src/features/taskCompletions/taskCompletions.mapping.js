@@ -6,7 +6,6 @@ const toTaskCompletionsDTO = (row) => {
         staffId: row.staff_id, 
         completedAt: row.completed_at, 
         initials: row.initials,
-        notes: row.notes, 
-        createdAt: row.created_at
+        notes: row.notes
     }
 }

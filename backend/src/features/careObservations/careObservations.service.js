@@ -39,10 +39,15 @@ export const createCareObservation = async(data) => {
 }
 
 export const updateCareObservation = async(id, data) => { 
-    const fields = Object.keys(data); 
-    if (fields.length === 0) return null; 
+    const fieldMap = {
+        staffId: "staff_id",
+        success: "success",
+        notes: "notes"
+    };
+    const fields = Object.keys(data).filter(f => fieldMap[f]);
+    if (fields.length === 0) return null;
+    const values = fields.map(f => data[f]);
 
-    const values = Object.values(data); 
     const setClause = fields.map((f,i) => `"${f}" = $${i+1}`).join(", "); 
     
     const result = await pool.query( 

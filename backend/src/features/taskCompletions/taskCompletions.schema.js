@@ -1,5 +1,3 @@
-// backend/src/features/taskCompletions/taskCompletions.schema.js 
-
 export const createTaskCompletionSchema = {
   type: "object",
   required: ["clientTaskId", "staffId", "initials"],

@@ -9,7 +9,6 @@ const router = Router();
 
 router.get("/", getAll);
 router.get("/:id", getOne); 
-// 1. validate body 2. call controller create fn 
 router.post("/", validateSchema(createCareObservationSchema), create); 
 router.patch("/:id", validateSchema(updateCareObservationSchema), update); 
 router.delete("/:id", remove); 

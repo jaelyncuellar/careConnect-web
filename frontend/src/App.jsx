@@ -19,14 +19,13 @@ function App() {
   console.log("USER CHANGED:", user);
   return (
     <Router>
-      {user && <Navbar />} {/* if logged in - show navbar - layered protection */}
+      {user && <Navbar />} 
       <div className="p-6">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route 
-          // before showing, check if user allowed 
             path="/dashboard" 
             element={ 
               <ProtectedRoute>

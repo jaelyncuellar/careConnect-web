@@ -14,7 +14,9 @@ export const auth = {
 
         const data = await response.json(); 
         if (!response.ok){ 
-            throw new Error(data.error || "Registration failed")
+            const validation = data.errors && Array.isArray(data.errors) ? data.errors.map(e => `${e.instancePath || e.dataPath || ''} ${e.message}`.trim()).join('; ') : null;
+            const message = data.error || data.message || validation || JSON.stringify(data) || "Registration failed";
+            throw new Error(message);
         }
         localStorage.setItem("user", JSON.stringify(data)); 
         return data;
@@ -29,7 +31,10 @@ export const auth = {
         }); 
         const data = await response.json(); 
         if (!response.ok){ 
-            throw new Error(data.error || "Login failed"); 
+            // displays the error clearly 
+            const validation = data.errors && Array.isArray(data.errors) ? data.errors.map(e => `${e.instancePath || e.dataPath || ''} ${e.message}`.trim()).join('; ') : null; 
+            const message = data.error || data.message || validation || JSON.stringify(data) || "Login failed"; 
+            throw new Error(message); 
         }
         localStorage.setItem("user", JSON.stringify(data)); 
         return data; 

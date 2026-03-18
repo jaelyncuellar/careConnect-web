@@ -15,10 +15,7 @@ export const updateClientTaskSchema = {
     type:"object", 
     additionalProperties: false, 
     properties: { 
-        clientId: { type: "string", format: "uuid"}, 
         frequency: { type: "string"}, 
         active: { type: "boolean"}, 
-        carePlanId: { type: "string", format: "uuid"}, 
-        taskDefinitionId: { type: "string", format: "uuid"}, 
     },
 };

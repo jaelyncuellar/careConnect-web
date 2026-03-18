@@ -77,7 +77,7 @@ export const updateCarePlan = async(id, data) => {
         `,
         [focusArea, startDate, endDate, notes, id]
     ); 
-    return toCarePlanDTO(result.rows[0]);  // do i want to return the entire row? 
+    return toCarePlanDTO(result.rows[0]);  
 }
 
 export const deleteCarePlan = async(id) => { 

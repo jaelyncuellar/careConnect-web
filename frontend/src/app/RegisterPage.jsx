@@ -33,6 +33,7 @@ export default function RegisterPage() {
         setError(""); 
 
         try { 
+            // let payload = { startDate, ...form };
             const data = await auth.register(form); 
             console.log("REGISTER RESPONSE:", data); // should show UUID 
             register(data);
@@ -75,7 +76,7 @@ export default function RegisterPage() {
                     </div>
                     <input name="phone" placeholder="Phone" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
                     <input type="email" name="email" placeholder="Email" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
-                    <input type="password" name="password"  placeholder="Password" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
+                    <input type="password" name="password"  placeholder="Password" minLength={1} onChange={handleChange} className="w-full border p-2 rounded-lg" required />
                     <input name="address" placeholder="Address" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
                     <input type="date" name="startDate" onChange={handleChange} className="w-full border p-2 rounded-lg" required />
 

@@ -1,5 +1,3 @@
-// backend/src/features/clients/clients.controller.js
-
 import * as clientService from "./clients.service.js"; 
 
 const getAll = async (req, res) => { 

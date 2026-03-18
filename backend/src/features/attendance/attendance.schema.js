@@ -1,5 +1,3 @@
-// backend/src/features/attendance/attendance.schema.js
-
 export const createAttendanceSchema = { 
     type: "object", 
     required: ["staffId","clientId", "shiftDate"],
@@ -8,7 +6,7 @@ export const createAttendanceSchema = {
         staffId: { type: "string", format: "uuid"}, 
         clientId: {type: "string", format: "uuid"},
         shiftDate: { type: "string", format: "date" }, 
-        timeIn: { type: "string", pattern: "^\\d{2}:\\d{2}(:\\d{2})?$" },// understand 
+        timeIn: { type: "string", pattern: "^\\d{2}:\\d{2}(:\\d{2})?$" },
         timeOut: { type: "string", pattern: "^\\d{2}:\\d{2}(:\\d{2})?$" }, 
         status: { type: "string", enum: ["on-time", "late", "absent"]
         },
@@ -19,9 +17,6 @@ export const updateAttendanceSchema = {
     type: "object", 
     additionalProperties: true, 
     properties: { 
-        staffId: { type: "string", format: "uuid"}, 
-        clientId: {type: "string", format: "uuid" },
-        shiftDate: { type: "string", format: "date" }, 
         timeIn: { type: "string", pattern: "^\\d{2}:\\d{2}(:\\d{2})?$" },
         timeOut: { type: "string", pattern: "^\\d{2}:\\d{2}(:\\d{2})?$" }, 
         status: { type: "string", enum: ["on-time", "late", "absent"]

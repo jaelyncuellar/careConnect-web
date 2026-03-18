@@ -1,11 +1,10 @@
 export const createTaskDefinitionSchema = {
   type: "object",
-  required: ["name", "description"],
+  required: ["title", "description"],
   additionalProperties: false, 
   properties: {
-    name: { type: "string" },
-    description: { type: "string" },
-    carePlanId: { type: "string", format:"uuid" }
+    title: { type: "string" },
+    description: { type: "string" }
   }
 }
 
@@ -13,9 +12,8 @@ export const updateTaskDefinitionSchema = {
   type: "object",
   additionalProperties: false, 
   properties: {
-    name: { type: "string" },
+    title: { type: "string" },
     description: { type: "string" },
-    carePlanId: { type: "string", format:"uuid" }
   }
 }
 

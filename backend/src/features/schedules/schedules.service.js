@@ -36,10 +36,18 @@ export const createSchedule = async(data) => {
 
 export const updateSchedule = async(id, data) => { 
     // dynamically build SET clause
-    const fields = Object.keys(data); 
-    if (fields.length === 0) return null; 
+    const fieldMap = {
+        staffId: "staff_id", 
+        clientId: "client_id", 
+        shiftDate: "shift_date",
+        startTime: "start_time",
+        endTime: "end_time"
+    };
 
-    const values = Object.values(data); 
+    const fields = Object.keys(data).filter(f=>fieldMap[f]);
+    if (fields.length === 0) return null; 
+    const values = fields.map(f=>data[f]); 
+
     const setClause = fields.map((f,i) => `"${f}" = $${i+1}`).join(", "); 
     
     const result = await pool.query( 

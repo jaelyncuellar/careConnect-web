@@ -40,19 +40,29 @@ export const createClient = async(clientData) => {
     return toClientsDTO(result.rows[0]); 
 }
 
+// dynamically build SET clause
 export const updateClient = async(id, clientData) => { 
-    // dynamically build SET clause
-    const fields = Object.keys(clientData); 
+    const fieldMap = {
+        levelOfCare: "level_of_care", 
+        phone: "phone", 
+        houseId: "house_id", 
+        guardianFirstName: "guardian_first_name", 
+        guardianLastName: "guardian_last_name", 
+        guardianPhone: "guardian_phone", 
+        endDate: "end_date", 
+        meds: "meds", 
+        active: "active"
+    }
+    const fields = Object.keys(clientData).filter(f=>fieldMap[f]); 
     if (fields.length === 0) return null; 
+    const values = fields.values(f=>clientData[f]);
 
-    const values = Object.values(clientData); 
     const setClause = fields.map((f,i) => `"${f}" = $${i+1}`).join(", "); 
     
     const result = await pool.query( 
         `UPDATE clients SET ${setClause} WHERE id=$${fields.length+1} RETURNING *`, 
         [...values, id]
     ); 
-
     return toClientsDTO(result.rows[0]); 
 }; 
 

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../features/auth/auth.api.js";
 import { useAuth } from "../features/auth/AuthContext.jsx";
 
-
 export default function LoginPage() { 
     const navigate = useNavigate(); 
     const { login } = useAuth(); 
@@ -25,8 +24,7 @@ export default function LoginPage() {
     async function handleSubmit(e) { 
         e.preventDefault(); 
         setLoading(true); 
-        setError(""); 
-
+        // setError(""); 
         try { 
             const data = await auth.login(
               form.email,

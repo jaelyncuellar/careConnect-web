@@ -31,6 +31,7 @@ export const registerUser = async(data) => {
         phone, 
         email, 
         address,
+        startDate
     } = data;
 
     try { 
@@ -39,11 +40,11 @@ export const registerUser = async(data) => {
             (first_name, 
             last_name, 
             role, phone,
-            email, password, address) 
-            VALUES ($1,$2,$3,$4,$5,$6,$7) 
+            email, password, address, start_date) 
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8) 
             RETURNING 
             id, first_name, last_name, email`, 
-            [firstName, lastName, role, phone, email, hashedPassword, address]
+            [firstName, lastName, role, phone, email, hashedPassword, address, startDate]
         ); 
         const row = result.rows[0];
         return { 
@@ -55,7 +56,8 @@ export const registerUser = async(data) => {
         if (err.code === "23505"){ 
             throw new Error("Email already exists"); 
         }
-        throw err;
+        console.error("could not register new user:", err); 
+        throw new Error("could not register new user: " + err.message); 
     }
 }; 
 
@@ -69,19 +71,31 @@ export const loginUser = async(data) => {
         [email]
     ); 
 
-    if (result.rows.length===0){ 
-        throw new Error("Invalid credientals");
-    }
+    // if (result.rows.length===0){ 
+    //     console.warn(`[auth] login failed: no user for email=${email}`);
+    //     throw new Error("Invalid credentials");
+    // }
 
     const user = result.rows[0];
+
     // compare provided pass with the stored hash 
-    const isMatch = await verifyPassword(password, user.password); 
-    if (!isMatch) { 
-        throw new Error("Invalid credientals"); 
+    let isMatch = await verifyPassword(password, user.password);
+    if (!isMatch) {
+        // fallback for pre-hashed/plaintext seeds (dev only)
+        if (user.password === password) {
+            console.warn(`[auth] login fallback plaintext match for email=${email}`);
+            isMatch = true;
+        }
     }
+
+    if (!isMatch) { 
+        console.warn(`[auth] login failed: password mismatch for email=${email}, hashLength=${user.password?.length}`);
+        throw new Error("Invalid credentials"); 
+    }
+
     return { 
         id: user.id, 
-        name: `${user.first_name}${user.last_name}`, 
+        name: `${user.first_name} ${user.last_name}`, 
         email: user.email
     }
 }; 

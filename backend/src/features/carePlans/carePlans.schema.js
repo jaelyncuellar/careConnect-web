@@ -1,5 +1,3 @@
-// backend/src/features/carePlans/carePlans.schema.js 
-
 export const createCarePlanSchema = {
   type: "object",
   required: ["clientId", "createdBy", "focusArea", "startDate"],

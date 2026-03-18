@@ -35,24 +35,20 @@ export const createClientTask = async(task)=> {
 }
 
 export const updateClientTask = async(id, data) => {
-  const fields = Object.keys(data); 
-  if (fields.length === 0) return null;
-  
-  const values = Object.values(data);
-  const setClause = fields
-    .map((f, i) => `"${f}" = $${i + 1}`)
-    .join(", ");
+  const { frequency, active } = data; 
 
-  const result = await pool.query(
-    `
-    UPDATE client_tasks
-    SET ${setClause}
-    WHERE id = $${fields.length + 1}
-    RETURNING *
-    `,
-    [...values, id]
+  const result = await pool.query( 
+      `
+      UPDATE client_tasks 
+      SET
+          frequency = COALESCE($1, frequency), 
+          active = COALESCE($2, active) 
+      WHERE id=$3
+      RETURNING *
+      `, 
+      [frequency, active, id]
   );
-  return toClientTasksDTO(result.rows[0]);
+  return toClientTasksDTO(result.rows[0]); 
 };
 
 export const deleteClientTask = async(id) => {

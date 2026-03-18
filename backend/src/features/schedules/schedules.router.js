@@ -7,7 +7,6 @@ import { getAll, getOne, create, update, remove
 
 const router = express.Router(); 
 
-// CRUD routes 
 router.get("/", getAll);
 router.get("/:id", getOne); 
 router.post("/", validateSchema(createScheduleSchema), create); 

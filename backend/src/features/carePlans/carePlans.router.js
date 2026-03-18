@@ -1,5 +1,3 @@
-// backend/src/features/carePlans/carePlans.router.js
-
 import { Router } from "express"; 
 import { validateSchema } from "../../middleware/validate.schema.js"
 import { createCarePlanSchema, updateCarePlanSchema }  from "./carePlans.schema.js";
