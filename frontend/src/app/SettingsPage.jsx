@@ -27,7 +27,8 @@ export default function SettingsPage() {
       // load curr user from localStorage (where user info stored by auth)
       if (user) { 
         setProfile({
-          name: user.name || "", 
+          // name: `${user.firstName} ${user.lastName}` || "", 
+          name: user.name || "",
           email: user.email || ""
         }); 
       }   

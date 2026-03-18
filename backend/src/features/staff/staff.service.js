@@ -1,5 +1,5 @@
 import { pool } from "../../db/db.js"; 
-import * as toStaffDTO from "./staff.mapping.js";
+import { toStaffDTO } from "./staff.mapping.js";
 
 export const getAllStaff = async() => {
   const result = await pool.query(

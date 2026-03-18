@@ -13,11 +13,23 @@ export async function apiRequest(endpoint, options = {}) {
     }); 
 
     if (!res.ok) { 
-        const data = await res.json().catch(() => ({})); 
-        throw new Error(data.message || "API request failed"); 
+        const errorData = await res.json().catch(() => ({})); 
+        throw new Error(errorData.message || "API request failed"); 
     }
+    const data = await res.json().catch(() => ({})); 
     return data;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
