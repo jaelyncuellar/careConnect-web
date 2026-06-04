@@ -6,16 +6,25 @@ export async function getAttendance() {
 }
 
 export function clockIn() {
-    return apiRequest("/attendance/clockin", { method: "POST"});
+    return apiRequest("/attendance/clockin", {
+         method: "POST"
+    });
 }
 
 export function clockOut() {
-    return apiRequest("/attendance/clockout", { method: "PATCH"}); 
+    return apiRequest("/attendance/clockout", {
+        method: "PATCH"
+    }); 
 }
 
 // manual attendance entry (admin correction)
 export function createAttendance(entry) {
-    return apiRequest("/attendance", { method: "POST", body: JSON.stringify(entry)}); 
+    return apiRequest("/attendance", 
+        { 
+            method: "POST", 
+            body: JSON.stringify(entry)
+        }
+    ); 
 }
 
 export function updateAttendance(id, entry) {

@@ -20,7 +20,6 @@ export async function createCarePlan(plan) {
     console.error("Full error:", error); 
     throw new Error("failed to create care plan");
   }
-
   return res.json();
 }
 

@@ -9,7 +9,7 @@ export const auth = {
             headers: { 
                 "Content-Type": "application/json", 
             }, 
-            body: JSON.stringify(userData), // JSON obj -> JS obj (backend)
+            body: JSON.stringify(userData), // JS obj -> JSON string 
         }); 
 
         const data = await response.json(); 
