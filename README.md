@@ -97,15 +97,15 @@ src/
 
 This app is a static Vite build and can be hosted on any static host.
 
-**GitHub Pages** is configured via `.github/workflows/deploy.yml` — pushing to `main` builds and deploys automatically (see setup steps below).
-
-Alternatively, deploy `dist/` to Vercel, Netlify, or any static file host.
-
-### GitHub Pages Setup
+A production build is published on the `gh-pages` branch (contains the built `index.html` + `assets/` only). To serve it with GitHub Pages:
 
 1. In the repo, go to **Settings → Pages**
-2. Under **Build and deployment**, select **GitHub Actions** as the source
-3. Push to `main` — the workflow builds the app and publishes `dist/` to Pages
+2. Under **Build and deployment**, select **Deploy from a branch** as the source
+3. Choose the `gh-pages` branch and `/ (root)` folder, then save
+
+The site will be live at `https://jaelyncuellar.github.io/careConnect-web/` after a minute or two.
+
+Alternatively, deploy `dist/` to Vercel, Netlify, or any static file host.
 
 ## Purpose
 
