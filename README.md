@@ -4,12 +4,32 @@ A healthcare operations platform for group homes and Direct Support Professional
 
 ## Screenshots
 
-<img width="1440" height="816" alt="CareConnect dashboard" src="https://github.com/user-attachments/assets/ab84ae8f-c194-4ec2-b227-4557def105fe" />
-<img width="1440" height="816" alt="CareConnect clients" src="https://github.com/user-attachments/assets/9b1e69bc-dc50-42ab-82ce-ff3d99b4a864" />
-<img width="1440" height="816" alt="CareConnect client detail" src="https://github.com/user-attachments/assets/af5ce9cf-d0f9-435a-bd1b-11045b5859b8" />
-<img width="1440" height="816" alt="CareConnect schedule" src="https://github.com/user-attachments/assets/c058a1dd-c815-4c2b-86f9-140c08da0264" />
-<img width="1440" height="816" alt="CareConnect reports" src="https://github.com/user-attachments/assets/3b00cd33-f616-41fe-bbbb-60cd56e2d790" />
-<img width="1440" height="816" alt="CareConnect login" src="https://github.com/user-attachments/assets/90d46bee-ca2f-460a-9af9-396f93f74614" />
+Screenshots from the [CareConnect case study on jaelyncuellar.com](https://jaelyncuellar.com/projects/careconnect) - the same image files are kept in this repo under `docs/portfolio/`.
+
+![CareConnect screenshot 1](docs/portfolio/care-connect-1.png)
+
+![CareConnect screenshot 2](docs/portfolio/care-connect-2.png)
+
+![CareConnect screenshot 3](docs/portfolio/care-connect-3.png)
+
+![CareConnect screenshot 4](docs/portfolio/care-connect-4.png)
+
+![CareConnect screenshot 5](docs/portfolio/care-connect-5.png)
+
+![CareConnect screenshot 6](docs/portfolio/care-connect-6.png)
+
+![CareConnect screenshot 7](docs/portfolio/care-connect-7.png)
+
+![CareConnect screenshot 8](docs/portfolio/care-connect-8.png)
+
+![CareConnect screenshot 9](docs/portfolio/care-connect-9.png)
+
+![CareConnect screenshot 10](docs/portfolio/care-connect-10.png)
+
+![CareConnect screenshot 11](docs/portfolio/care-connect-11.png)
+
+![CareConnect screenshot 12](docs/portfolio/care-connect-12.png)
+
 
 ## Features
 
